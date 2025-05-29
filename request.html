@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Request Blood</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      background: linear-gradient(to right, #ffe5e5, #fff);
+      padding: 2rem;
+    }
+
+    .form-container {
+      max-width: 600px;
+      background: #fff;
+      padding: 2rem;
+      margin: auto;
+      border-radius: 15px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s ease;
+    }
+
+    .form-container:hover {
+      transform: scale(1.01);
+    }
+
+    h2 {
+      text-align: center;
+      color: #b80000;
+      margin-bottom: 1.5rem;
+    }
+
+    .input-group {
+      position: relative;
+      margin-bottom: 1.5rem;
+    }
+
+    .input-group input,
+    .input-group select {
+      width: 100%;
+      padding: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 1rem;
+      outline: none;
+      transition: border 0.2s;
+    }
+
+    .input-group label {
+      position: absolute;
+      left: 1rem;
+      top: 1rem;
+      background: white;
+      padding: 0 0.25rem;
+      color: #999;
+      transition: 0.2s ease all;
+      pointer-events: none;
+    }
+
+    .input-group input:focus,
+    .input-group select:focus {
+      border-color: #b80000;
+    }
+
+    .input-group input:focus + label,
+    .input-group input:not(:placeholder-shown) + label,
+    .input-group select:focus + label,
+    .input-group select:not(:placeholder-shown) + label {
+      top: -10px;
+      left: 0.75rem;
+      font-size: 0.8rem;
+      color: #b80000;
+    }
+
+    button {
+      width: 100%;
+      padding: 1rem;
+      background-color: #b80000;
+      color: white;
+      font-size: 1.1rem;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background-color: #8b0000;
+    }
+
+    .success-message {
+      color: green;
+      margin-top: 1rem;
+      text-align: center;
+      display: none;
+      font-weight: bold;
+      animation: fadeIn 0.5s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 600px) {
+      .form-container {
+        padding: 1.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="form-container">
+    <h2>🩸 Request Blood</h2>
+    <form id="bloodRequestForm" novalidate>
+      <div class="input-group">
+        <input type="text" id="name" required placeholder=" " />
+        <label for="name">Full Name</label>
+      </div>
+
+      <div class="input-group">
+        <input type="email" id="email" required placeholder=" " />
+        <label for="email">Email</label>
+      </div>
+
+      <div class="input-group">
+        <select id="bloodGroup" required>
+          <option value="" disabled selected hidden></option>
+          <option>A+</option>
+          <option>A-</option>
+          <option>B+</option>
+          <option>B-</option>
+          <option>AB+</option>
+          <option>AB-</option>
+          <option>O+</option>
+          <option>O-</option>
+        </select>
+        <label for="bloodGroup">Blood Group</label>
+      </div>
+
+      <div class="input-group">
+        <input type="number" id="units" min="1" required placeholder=" " />
+        <label for="units">Units Required</label>
+      </div>
+
+      <div class="input-group">
+        <input type="date" id="date" required placeholder=" " />
+        <label for="date">Required Date</label>
+      </div>
+
+      <div class="input-group">
+        <input type="text" id="hospital" required placeholder=" " />
+        <label for="hospital">Hospital Name</label>
+      </div>
+
+      <div class="input-group">
+        <input type="tel" id="contact" pattern="[0-9]{10}" required placeholder=" " />
+        <label for="contact">Contact Number</label>
+      </div>
+
+      <button type="submit">Submit Request</button>
+
+      <div class="success-message" id="successMsg">✅ Request submitted successfully!</div>
+    </form>
+  </div>
+
+  <script>
+    const form = document.getElementById('bloodRequestForm');
+    const successMsg = document.getElementById('successMsg');
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const isValid = [...form.elements].every(input => {
+        return input.type !== 'submit' && input.checkValidity();
+      });
+
+      if (!isValid) {
+        alert('Please complete all required fields correctly.');
+        return;
+      }
+
+      successMsg.style.display = 'block';
+      form.reset();
+      setTimeout(() => {
+        successMsg.style.display = 'none';
+      }, 4000);
+    });
+  </script>
+
+</body>
+</html>

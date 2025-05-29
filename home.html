@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Home</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #fff8f8;
+      color: #333;
+    }
+
+    header {
+      background-color: #b71c1c;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      color: white;
+    }
+
+    header .logo {
+      font-size: 1.6rem;
+      font-weight: bold;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+    }
+
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      transition: 0.3s;
+    }
+
+    nav ul li a:hover {
+      color: #ffcccb;
+    }
+
+    .hero {
+      background: url('https://images.unsplash.com/photo-1582719478170-ef33dfb29b80?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80') center/cover no-repeat;
+      color: white;
+      text-align: center;
+      padding: 100px 20px;
+    }
+
+    .hero-content {
+      background-color: rgba(183, 28, 28, 0.85);
+      padding: 50px;
+      border-radius: 12px;
+      display: inline-block;
+      max-width: 700px;
+    }
+
+    .hero h1 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      margin-bottom: 30px;
+    }
+
+    .hero .buttons a {
+      text-decoration: none;
+      padding: 12px 24px;
+      margin: 10px;
+      border-radius: 30px;
+      font-weight: bold;
+      display: inline-block;
+      transition: 0.3s;
+    }
+
+    .btn-red {
+      background: #fff;
+      color: #b71c1c;
+      border: 2px solid #fff;
+    }
+
+    .btn-red:hover {
+      background: transparent;
+      color: white;
+    }
+
+    .btn-white {
+      background: transparent;
+      color: white;
+      border: 2px solid #fff;
+    }
+
+    .btn-white:hover {
+      background: white;
+      color: #b71c1c;
+    }
+
+    .section {
+      padding: 60px 20px;
+      text-align: center;
+    }
+
+    .section h2 {
+      font-size: 2rem;
+      color: #b71c1c;
+      margin-bottom: 20px;
+    }
+
+    .section p,
+    .section ul {
+      font-size: 1.1rem;
+      max-width: 700px;
+      margin: auto;
+      line-height: 1.6;
+    }
+
+    .section-alt {
+      background-color: #ffeaea;
+    }
+
+    /* Slider Section */
+    .slider-section {
+      background-color: #582b2b;
+      padding: 2rem 0;
+      position: relative;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    .slider-wrapper {
+      display: flex;
+      gap: 1.5rem;
+      overflow-x: auto;
+      scroll-behavior: smooth;
+      padding: 1rem;
+      scroll-snap-type: x mandatory;
+
+      /* Hide scrollbar */
+      -ms-overflow-style: none; /* IE and Edge */
+       scrollbar-width: none;/* Firefox */
+    }
+
+    .slider-wrapper::-webkit-scrollbar {
+      display: none; /* Chrome, Safari, Opera */
+    }
+
+    .card {
+      flex: 0 0 auto;
+      scroll-snap-align: start;
+      width: 280px;
+      background: #fff;
+      border-radius: 16px;
+      padding: 1.5rem;
+      text-align: center;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    }
+
+    .card img {
+      width: 40px;
+      height: 40px;
+      margin-bottom: 1rem;
+      opacity: 0.6;
+    }
+
+    .card h3 {
+      font-size: 1.1rem;
+      color: #333;
+      margin-bottom: 0.5rem;
+    }
+
+    .card p {
+      font-size: 0.9rem;
+      color: #666;
+    }
+
+    .scroll-btn {
+      background-color: #fff;
+      border: none;
+      font-size: 2rem;
+      color: #b71c1c;
+      cursor: pointer;
+      padding: 0 10px;
+      z-index: 1;
+      transition: background 0.3s;
+    }
+
+    .scroll-btn:hover {
+      background-color: #ffebeb;
+    }
+
+    .scroll-btn.left {
+      position: absolute;
+      left: 0;
+    }
+
+    .scroll-btn.right {
+      position: absolute;
+      right: 0;
+    }
+
+    footer {
+      background-color: #b71c1c;
+      color: white;
+      text-align: center;
+      padding: 15px;
+    }
+
+    @media (max-width: 768px) {
+      nav ul {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+      }
+
+      .hero h1 {
+        font-size: 2rem;
+      }
+
+      .hero-content {
+        padding: 30px 20px;
+      }
+
+      .scroll-btn {
+        display: none;
+      }
+
+      .slider-wrapper {
+        gap: 1rem;
+        padding: 1rem 0.5rem;
+      }
+
+      .card {
+        width: 250px;
+      }
+    }
+  </style>
+
+</head>
+
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="logo">🩸 Blood Bank</div>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="donate.html">Donate</a></li>
+        <li><a href="request.html">Request</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Donate Blood, Save Lives</h1>
+      <p>Your donation could be someone's hope for life. Be a hero today.</p>
+      <div class="buttons">
+        <a href="donate.html" class="btn-red">Donate Now</a>
+        <a href="#" class="btn-white">Request Blood</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section class="section">
+    <h2>About Our Blood Bank</h2>
+    <p>We connect life-saving donors with patients in need. Our system ensures safe, quick, and reliable blood donation
+      and transfusion services, available to all.</p>
+  </section>
+
+  <!-- Why Donate Section -->
+  <section class="section section-alt">
+    <h2>Why Donate Blood?</h2>
+    <ul>
+      <li>🩸 One donation can save up to three lives.</li>
+      <li>💉 Blood cannot be manufactured — only donated.</li>
+      <li>⏱️ Donation is simple, quick, and safe.</li>
+    </ul>
+  </section>
+
+  <!-- Benefits Slider Section -->
+  <section class="slider-section">
+    <button class="scroll-btn left" onclick="scrollSlider(-1)">&#10094;</button>
+    <div class="slider-wrapper" id="slider">
+      <div class="card">
+        <img src="https://img.icons8.com/ios/50/clock--v1.png" alt="Time Icon" />
+        <h3>It's only an hour</h3>
+        <p>Your blood saves lives!</p>
+      </div>
+      <div class="card">
+        <img src="https://img.icons8.com/ios/50/soda-cup--v1.png" alt="Refreshments" />
+        <h3>You will get free refreshments after donation</h3>
+        <p>Donation of blood is safe and healthy</p>
+      </div>
+      <div class="card">
+        <img src="https://img.icons8.com/ios/50/rupee.png" alt="Cost Icon" />
+        <h3>It costs nothing</h3>
+        <p>Give blood and stay healthy</p>
+      </div>
+      <div class="card">
+        <img src="https://img.icons8.com/ios/50/heart-health.png" alt="Heart Icon" />
+        <h3>There is nothing better than saving a life</h3>
+        <p>Every blood donor is a hero</p>
+      </div>
+      <div class="card">
+        <img src="https://img.icons8.com/ios/50/doctor.png" alt="Doctor Icon" />
+        <h3>Helps Patients with Chronic Illness</h3>
+        <p>Regular donations assist those with anemia and cancer treatments.</p>
+      </div>
+      <div class="card">
+        <img src="https://img.icons8.com/ios/50/ambulance.png" alt="Emergency Icon" />
+        <h3>Supports Emergency Care</h3>
+        <p>Blood donation helps save lives in accidents and surgeries.</p>
+      </div>
+    </div>
+    <button class="scroll-btn right" onclick="scrollSlider(1)">&#10095;</button>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 Blood Bank System. All rights reserved.</p>
+  </footer>
+
+  <script>
+    function scrollSlider(direction) {
+      const slider = document.getElementById('slider');
+      const scrollAmount = 320;
+      slider.scrollBy({ left: scrollAmount * direction, behavior: 'smooth' });
+    }
+  </script>
+
+</body>
+
+</html>

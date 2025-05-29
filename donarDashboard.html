@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Donor Dashboard - Blood Bank System</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #fff8f8;
+      color: #333;
+    }
+
+    header {
+      background-color: #b71c1c;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .dashboard {
+      max-width: 900px;
+      margin: 30px auto;
+      padding: 20px;
+      background: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 0 12px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      color: #b71c1c;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .profile {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .profile-info {
+      flex: 1;
+      min-width: 250px;
+    }
+
+    .profile-info h3 {
+      margin-bottom: 10px;
+      color: #a01818;
+    }
+
+    .info-box {
+      margin-bottom: 15px;
+    }
+
+    .info-box label {
+      font-weight: bold;
+      display: block;
+      color: #444;
+    }
+
+    .info-box span {
+      color: #555;
+    }
+
+    .actions {
+      text-align: center;
+      margin-top: 30px;
+    }
+
+    .actions button {
+      background-color: #b71c1c;
+      color: white;
+      padding: 12px 24px;
+      font-size: 16px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      margin: 0 10px;
+    }
+
+    .actions button:hover {
+      background-color: #a01818;
+    }
+
+    footer {
+      text-align: center;
+      color: #777;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>🩸 Donor Dashboard</h1>
+  </header>
+
+  <section class="dashboard">
+    <h2>Welcome, [Donor Name]!</h2>
+
+    <div class="profile">
+      <div class="profile-info">
+        <h3>Your Information</h3>
+
+        <div class="info-box">
+          <label>Full Name:</label>
+          <span>John Doe</span>
+        </div>
+
+        <div class="info-box">
+          <label>Blood Group:</label>
+          <span>O+</span>
+        </div>
+
+        <div class="info-box">
+          <label>Age:</label>
+          <span>29</span>
+        </div>
+
+        <div class="info-box">
+          <label>Email:</label>
+          <span>john.doe@example.com</span>
+        </div>
+
+        <div class="info-box">
+          <label>Phone:</label>
+          <span>9876543210</span>
+        </div>
+
+        <div class="info-box">
+          <label>Location:</label>
+          <span>Bangalore, India</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button onclick="alert('Redirect to Donate Page')">🩸 Donate Blood</button>
+      <button onclick="alert('Redirect to History Page')">📋 Donation History</button>
+      <button onclick="alert('Redirect to Profile Update')">⚙️ Update Profile</button>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 Blood Bank System. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Donate Blood - Blood Bank System</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(120deg, #fff8f8, #ffe6e6);
+      color: #333;
+    }
+
+    header {
+      background-color: #b71c1c;
+      color: white;
+      padding: 30px 20px;
+      text-align: center;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    header h1 {
+      font-size: 2rem;
+      margin-bottom: 5px;
+    }
+
+    header p {
+      font-size: 1rem;
+      color: #ffe6e6;
+    }
+
+    main {
+      padding: 40px 20px;
+      max-width: 600px;
+      margin: 40px auto;
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.08);
+      animation: fadeIn 0.8s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h2 {
+      text-align: center;
+      color: #b71c1c;
+      margin-bottom: 30px;
+      font-size: 1.5rem;
+    }
+
+    .form-group {
+      position: relative;
+      margin-bottom: 25px;
+    }
+
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      padding: 14px 12px;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      background-color: #fff;
+      outline: none;
+      transition: 0.3s;
+    }
+
+    .form-group label {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      font-size: 1rem;
+      color: #999;
+      background: white;
+      padding: 0 5px;
+      pointer-events: none;
+      transition: 0.3s ease;
+    }
+
+    .form-group input:focus + label,
+    .form-group input:not(:placeholder-shown) + label,
+    .form-group select:focus + label,
+    .form-group select:not(:placeholder-shown) + label {
+      top: -10px;
+      left: 10px;
+      font-size: 0.8rem;
+      color: #b71c1c;
+    }
+
+    button {
+      display: block;
+      width: 100%;
+      padding: 14px;
+      background-color: #b71c1c;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+
+    button:hover {
+      background-color: #a01818;
+      transform: scale(1.02);
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      color: #777;
+      padding-bottom: 20px;
+    }
+
+    @media (max-width: 600px) {
+      main {
+        padding: 25px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>🩸 Donate Blood</h1>
+    <p>Be a hero. Save a life today.</p>
+  </header>
+
+  <main>
+    <h2>Donor Registration Form</h2>
+    <form action="#" method="post">
+      <div class="form-group">
+        <input type="text" id="name" name="name" placeholder=" " required>
+        <label for="name">Full Name</label>
+      </div>
+
+      <div class="form-group">
+        <input type="number" id="age" name="age" min="18" max="60" placeholder=" " required>
+        <label for="age">Age</label>
+      </div>
+
+      <div class="form-group">
+        <select id="bloodgroup" name="bloodgroup" required>
+          <option value="" disabled selected hidden></option>
+          <option>A+</option>
+          <option>A-</option>
+          <option>B+</option>
+          <option>B-</option>
+          <option>AB+</option>
+          <option>AB-</option>
+          <option>O+</option>
+          <option>O-</option>
+        </select>
+        <label for="bloodgroup">Blood Group</label>
+      </div>
+
+      <div class="form-group">
+        <input type="email" id="email" name="email" placeholder=" " required>
+        <label for="email">Email</label>
+      </div>
+
+      <div class="form-group">
+        <input type="tel" id="phone" name="phone" pattern="[0-9]{10}" placeholder=" " required>
+        <label for="phone">Phone Number</label>
+      </div>
+
+      <div class="form-group">
+        <input type="text" id="location" name="location" placeholder=" " required>
+        <label for="location">Location</label>
+      </div>
+
+      <button type="submit">Submit Donation Info</button>
+    </form>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Blood Bank System. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>
