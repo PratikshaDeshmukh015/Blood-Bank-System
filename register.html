@@ -60,18 +60,28 @@
       box-shadow: 0 0 5px rgba(231, 76, 60, 0.4);
     }
 
-    button {
-      background-color: #e74c3c;
-      color: white;
-      padding: 15px;
-      border: none;
-      width: 100%;
-      border-radius: 10px;
-      font-size: 18px;
-      font-weight: bold;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
+    .button {
+  display: inline-block;
+  padding: 12px 20px;
+  background-color: #28a745; /* Green color */
+  color: #fff;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 8px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.button i {
+  margin-right: 8px; /* Space between icon and text */
+}
+
+.button:hover {
+  background-color: #218838;
+  transform: scale(1.05);
+}
+
 
     button:hover {
       background-color: #c0392b;
@@ -118,11 +128,11 @@
         <input type="text" id="name" name="name" required>
       </div>
 
-    <div class="form-group">
+    <!-- <div class="form-group">
         <label for="password">Password:</label>
         <i class="fas fa-lock"></i>
         <input type="password" id="password" name="password" required placeholder="Create a strong password">
-    </div>
+    </div> -->
     
 
 
@@ -187,14 +197,31 @@
         </select>
       </div>
 
-      <button type="submit"><i class="fas fa-check-circle"></i> Register</button>
-     <div class="center-link">
-        <a href="login.html">Login here</a>
+   
+<form action="login.html" method="get">
+  <button type="submit">Register</button>
+</form>
+
+
+        <!-- <a href="loginconfirm.html">Login here</a> -->
     </div>
 
 
     </form>
   </div>
+  <script src="register.js"></script>
+   <!-- <script>
+    document.getElementById("registrationForm").addEventListener("submit", function(event) {
+      event.preventDefault(); // Prevent default form submission
+
+      // Optional: Collect form data and save via AJAX here
+
+      // Simulate successful submission and redirect
+      alert("Registration Successful!");
+      window.location.href = "loginconfirm.html"; // Redirect to confirmation page
+    });
+  </script> -->
+
 
 </body>
 </html>
