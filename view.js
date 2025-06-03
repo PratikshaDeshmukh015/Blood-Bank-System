@@ -1,33 +1,54 @@
-const BASE_URL = "http://localhost:9090/register";
+const DONOR_URL = "http://localhost:9090/api/donors/all";
+const REQUEST_URL = "http://localhost:9090/api/requests/all";
 
-document.addEventListener("DOMContentLoaded", () => {
-  fetch(BASE_URL)
-    .then(res => {
-      if (!res.ok) throw new Error("Failed to fetch users");
-      return res.json();
-    })
-    .then(users => {
-      const tbody = document.querySelector("#usersTable tbody");
+document.addEventListener("DOMContentLoaded", function () {
+  fetchDonors();
+  fetchRequests();
+});
+
+function fetchDonors() {
+  fetch(DONOR_URL)
+    .then(res => res.json())
+    .then(data => {
+      const tbody = document.getElementById("donorTable").querySelector("tbody");
       tbody.innerHTML = "";
-
-      users.forEach(user => {
-        const tr = document.createElement("tr");
-        tr.innerHTML = `
-          <td>${user.id}</td>
-          <td>${user.name}</td>
-          <td>${user.age}</td>
-          <td>${user.gender}</td>
-          <td>${user.bloodGroup}</td>
-          <td>${user.contact}</td>
-          <td>${user.email}</td>
-          <td>${user.address}</td>
-          <td>${user.type}</td>
-        `;
-        tbody.appendChild(tr);
+      data.forEach(donor => {
+        const row = `
+          <tr>
+            <td>${donor.number}</td>
+            <td>${donor.name}</td>
+            <td>${donor.age}</td>
+            <td>${donor.bloodgroup}</td>
+            <td>${donor.email}</td>
+            <td>${donor.phone}</td>
+            <td>${donor.location}</td>
+          </tr>`;
+        tbody.innerHTML += row;
       });
     })
-    .catch(error => {
-      console.error("Error fetching users:", error);
-      alert("Failed to load users data");
-    });
-});
+    .catch(err => console.error("Error fetching donors:", err));
+}
+
+function fetchRequests() {
+  fetch(REQUEST_URL)
+    .then(res => res.json())
+    .then(data => {
+      const tbody = document.getElementById("requestTable").querySelector("tbody");
+      tbody.innerHTML = "";
+      data.forEach(req => {
+        const row = `
+          <tr>
+            <td>${req.number}</td>
+            <td>${req.name}</td>
+            <td>${req.email}</td>
+            <td>${req.bloodGroup}</td>
+            <td>${req.units}</td>
+            <td>${req.date}</td>
+            <td>${req.hospital}</td>
+            <td>${req.contact}</td>
+          </tr>`;
+        tbody.innerHTML += row;
+      });
+    })
+    .catch(err => console.error("Error fetching requests:", err));
+}

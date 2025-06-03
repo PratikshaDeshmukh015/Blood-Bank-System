@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>View Donors</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to right, #ffe5e5, #fff);
+      padding: 2rem;
+      margin: 0;
+    }
+
+    h2 {
+      text-align: center;
+      color: #b80000;
+      margin-bottom: 2rem;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: auto;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+      overflow: hidden;
+      background-color: white;
+    }
+
+    thead {
+      background-color: #b80000;
+      color: white;
+    }
+
+    th, td {
+      padding: 1rem;
+      text-align: center;
+      border-bottom: 1px solid #ddd;
+    }
+
+    tbody tr:hover {
+      background-color: #ffe5e5;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    @media (max-width: 768px) {
+      table, thead, tbody, th, td, tr {
+        display: block;
+      }
+
+      thead {
+        display: none;
+      }
+
+      td {
+        position: relative;
+        padding-left: 50%;
+        text-align: left;
+        border: none;
+        border-bottom: 1px solid #ccc;
+      }
+
+      td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        font-weight: bold;
+        color: #b80000;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h2>🩸 Donor List</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Age</th>
+        <th>Blood Group</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>Location</th>
+      </tr>
+    </thead>
+    <tbody id="donorTableBody">
+      <!-- Populated by JS -->
+    </tbody>
+  </table>
+
+  <script src="donarview.js"></script>
+  <script src="delete.js"></script>
+</body>
+</html>

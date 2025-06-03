@@ -2,51 +2,85 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<head>
-  <title>Donor List</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <title>View Donors & Requests</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 2rem;
+      background-color: #f7f7f7;
+    }
+
+    h2 {
+      color: #b80000;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 2rem;
+    }
+
+    th, td {
+      border: 1px solid #ccc;
+      padding: 0.75rem;
+      text-align: left;
+    }
+
+    th {
+      background-color: #b80000;
+      color: white;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+
+    .section {
+      margin-bottom: 3rem;
+    }
+  </style>
 </head>
 <body>
-  <h2>Registered Donors</h2>
-  <table border="1" id="donorTable">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Age</th>
-        <th>Blood Group</th>
-        <th>Email</th>
-        <th>Phone</th>
-        <th>Location</th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
 
-  <script>
-    const BASE_URL = "http://localhost:9090/api/donors";
+  <div class="section">
+    <h2>🩸 Donor List</h2>
+    <table id="donorTable">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Age</th>
+          <th>Blood Group</th>
+          <th>Email</th>
+          <th>Phone</th>
+          <th>Location</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
 
-    fetch(`${BASE_URL}/getall`)
-      .then(response => response.json())
-      .then(data => {
-        const tbody = document.querySelector("#donorTable tbody");
-        data.forEach(donor => {
-          const row = document.createElement("tr");
-          row.innerHTML = `
-            <td>${donor.id}</td>
-            <td>${donor.name}</td>
-            <td>${donor.age}</td>
-            <td>${donor.bloodgroup}</td>
-            <td>${donor.email}</td>
-            <td>${donor.phone}</td>
-            <td>${donor.location}</td>
-          `;
-          tbody.appendChild(row);
-        });
-      })
-      .catch(error => {
-        console.error("Error fetching donor data:", error);
-      });
-  </script>
+  <div class="section">
+    <h2>📄 Blood Requests</h2>
+    <table id="requestTable">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Blood Group</th>
+          <th>Units</th>
+          <th>Date</th>
+          <th>Hospital</th>
+          <th>Contact</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <script src="view.js"></script>
 </body>
 </html>

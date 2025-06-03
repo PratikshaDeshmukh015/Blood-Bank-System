@@ -1,45 +1,22 @@
-const BASE_URL = "http://localhost:9090/api"; // Your Spring Boot backend root path
+// const BASE_URL = "http://localhost:9090/login";
+function login(event) {
+  event.preventDefault(); // prevent form from reloading
 
-// REGISTER FUNCTION
-document.getElementById("registerForm").addEventListener("submit", function (e) {
-    e.preventDefault();
-    const username = document.getElementById("regUsername").value;
-    const password = document.getElementById("regPassword").value;
+  const username = document.getElementById("UserName").value.trim();
+  const password = document.getElementById("password").value.trim();
 
-    fetch(`${BASE_URL}/register`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password })
-    })
-    .then(res => res.text())
-    .then(msg => {
-        document.getElementById("responseMsg").innerText = msg;
-        console.log("Register response:", msg);
-    })
-    .catch(err => {
-        console.error("Register error:", err);
-        document.getElementById("responseMsg").innerText = "Registration failed.";
-    });
-});
+  const fixedUsername = "request";
+  const fixedPassword = "12345";
 
-// LOGIN FUNCTION
-document.getElementById("loginForm").addEventListener("submit", function (e) {
-    e.preventDefault();
-    const username = document.getElementById("loginUsername").value;
-    const password = document.getElementById("loginPassword").value;
+  if (!username || !password) {
+    alert("Please enter both username and password.");
+    return;
+  }
 
-    fetch(`${BASE_URL}/login`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password })
-    })
-    .then(res => res.text())
-    .then(msg => {
-        document.getElementById("responseMsg").innerText = msg;
-        console.log("Login response:", msg);
-    })
-    .catch(err => {
-        console.error("Login error:", err);
-        document.getElementById("responseMsg").innerText = "Login failed.";
-    });
-});
+  if (username === fixedUsername && password === fixedPassword) {
+    alert("Login successful!");
+    window.location.href = "donarview.html"; // redirect
+  } else {
+    alert("Invalid username or password");
+  }
+}

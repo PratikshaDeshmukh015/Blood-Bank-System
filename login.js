@@ -1,33 +1,22 @@
 const BASE_URL = "http://localhost:9090/login";
-
 function login(event) {
-  event.preventDefault(); // prevent default form submission
+  event.preventDefault(); // prevent form from reloading
 
-  const username = document.getElementById("UserName").value;
-  const password = document.getElementById("password").value;
+  const username = document.getElementById("UserName").value.trim();
+  const password = document.getElementById("password").value.trim();
+
+  const fixedUsername = "donar";
+  const fixedPassword = "12345";
 
   if (!username || !password) {
-    alert("Please enter both username and password");
+    alert("Please enter both username and password.");
     return;
   }
 
-  fetch(`${BASE_URL}/get/${username}`)
-    .then(res => {
-      if (!res.ok) {
-        throw new Error("User not found");
-      }
-      return res.json();
-    })
-    .then(data => {
-      if (data.password === password) {
-        alert("Login successful!");
-        // Redirect or display dashboard
-        window.location.href = "dashboard.html"; // optional page
-      } else {
-        alert("Incorrect password");
-      }
-    })
-    .catch(err => {
-      alert("Login failed: " + err.message);
-    });
+  if (username === fixedUsername && password === fixedPassword) {
+    alert("Login successful!");
+    window.location.href = "donarview.html"; // redirect
+  } else {
+    alert("Invalid username or password");
+  }
 }

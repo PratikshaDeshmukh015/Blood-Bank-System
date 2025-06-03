@@ -179,31 +179,10 @@
 
       <div class="success-message" id="successMsg">✅ Request submitted successfully!</div>
     </form>
+    <script src="request.js"></script>
   </div>
 
-  <script>
-    const form = document.getElementById('bloodRequestForm');
-    const successMsg = document.getElementById('successMsg');
-
-    form.addEventListener('submit', function (e) {
-      e.preventDefault();
-
-      const isValid = [...form.elements].every(input => {
-        return input.type !== 'submit' && input.checkValidity();
-      });
-
-      if (!isValid) {
-        alert('Please complete all required fields correctly.');
-        return;
-      }
-
-      successMsg.style.display = 'block';
-      form.reset();
-      setTimeout(() => {
-        successMsg.style.display = 'none';
-      }, 4000);
-    });
-  </script>
+  
 
 </body>
 </html>
