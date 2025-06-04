@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Donor Registration</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: linear-gradient(to right, #e0f7fa, #e1bee7);
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    .form-container {
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+      width: 100%;
+      max-width: 500px;
+    }
+
+    .form-container h2 {
+      text-align: center;
+      color: #6a1b9a;
+    }
+
+    label {
+      display: block;
+      margin-top: 20px;
+      font-weight: bold;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 12px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+
+    input:focus, select:focus {
+      border-color: #6a1b9a;
+      box-shadow: 0 0 5px #6a1b9a88;
+      outline: none;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      background-color: #6a1b9a;
+      color: white;
+      border: none;
+      font-size: 16px;
+      margin-top: 30px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #4a148c;
+    }
+
+    .success-message, .error-message {
+      text-align: center;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+
+    .success-message {
+      color: green;
+    }
+
+    .error-message {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="form-container">
+    <h2>Donor Registration</h2>
+    <form id="donorForm" onsubmit="registerDonor(event)">
+      <label for="name">Full Name</label>
+      <input type="text" id="name" required placeholder="Enter your full name" />
+
+      <label for="age">Age</label>
+      <input type="number" id="age" required placeholder="Enter your age" />
+
+      <label for="bloodGroup">Blood Group</label>
+      <select id="bloodGroup" required>
+        <option value="">Select</option>
+        <option value="A+">A+</option>
+        <option value="A-">A-</option>
+        <option value="B+">B+</option>
+        <option value="B-">B-</option>
+        <option value="O+">O+</option>
+        <option value="O-">O-</option>
+        <option value="AB+">AB+</option>
+        <option value="AB-">AB-</option>
+      </select>
+
+      <label for="phone">Phone Number</label>
+      <input type="text" id="phone" required placeholder="Enter your contact number" />
+
+      <label for="email">Email</label>
+      <input type="email" id="email" required placeholder="Enter your email address" />
+
+      <label for="username">Username</label>
+      <input type="text" id="username" required placeholder="Choose a username" />
+
+      <label for="password">Password</label>
+      <input type="password" id="password" required placeholder="Create a password" />
+
+       <button type="submit">Register</button>
+       <a href="DonarRegisLogin.html">Login</a>
+
+       <!-- <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px;">
+  <button type="submit">Register</button>
+  <a href="login1.html" style="text-decoration: none; color: #d60000; font-weight: bold;">Login</a> -->
+</div>
+
+    </form>
+
+  </div>
+   <script src="donarRegister.js"></script>
+
+
+
+</body>
+</html>
