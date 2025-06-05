@@ -42,6 +42,7 @@ function registerDonor(event) {
     alert(message);
     // document.getElementById("donorForm").reset(); // Clear form after success
      window.location.href = "donate.html";
+
   })
   .catch(error => {
     alert("Error: " + error.message);
