@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blood Units Received</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #f0f4f8;
+    }
+
+    header {
+      background-color: #b80000;
+      color: white;
+      padding: 1.2rem;
+      text-align: center;
+      font-size: 1.6rem;
+      font-weight: bold;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 2rem auto;
+      padding: 1.5rem;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      text-align: center;
+      color: #b80000;
+      margin-bottom: 1rem;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+
+    th, td {
+      padding: 1rem;
+      text-align: left;
+      border-bottom: 1px solid #eee;
+    }
+
+    th {
+      background-color: #b80000;
+      color: white;
+    }
+
+    tr:hover {
+      background-color: #f9f9f9;
+    }
+
+    .back-btn {
+      margin-top: 1rem;
+      display: inline-block;
+      background: #d90429;
+      color: white;
+      padding: 0.7rem 1.2rem;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      text-decoration: none;
+      font-size: 1rem;
+    }
+
+    .back-btn:hover {
+      background: #a00000;
+    }
+  </style>
+</head>
+<body>
+
+  <header>🩸 Blood Units Received</header>
+
+  <div class="container">
+    <h2>List of Blood Units Received</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Donor Name</th>
+          <th>Blood Group</th>
+          <th>Units</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+      <tbody id="unitTable">
+        <!-- Data will be inserted here -->
+      </tbody>
+    </table>
+
+    <a href="dashboard.html" class="back-btn">← Back to Dashboard</a>
+  </div>
+     <script src="bloodRe.js"></script>
+
+
+ 
+
+</body>
+</html>

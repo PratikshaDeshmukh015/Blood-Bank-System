@@ -37,6 +37,12 @@
       border-radius: 10px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
       text-align: center;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
     }
 
     .card h3 {
@@ -99,15 +105,15 @@
 
   <div class="dashboard">
     <div class="cards">
-      <div class="card">
+      <div class="card" onclick="window.location.href='units.html'">
         <h3>Blood Units Received</h3>
         <p id="unitsReceived">0</p>
       </div>
-      <div class="card">
+      <div class="card" onclick="window.location.href='pending.html'">
         <h3>Pending Requests</h3>
         <p id="pendingRequests">0</p>
       </div>
-      <div class="card">
+      <div class="card" onclick="window.location.href='donors.html'">
         <h3>Compatible Donors</h3>
         <p id="donorMatches">0</p>
       </div>
@@ -155,12 +161,12 @@
       });
 
       document.getElementById('unitsReceived').innerText = totalUnits;
-      document.getElementById('pendingRequests').innerText = 2; // mock value
-      document.getElementById('donorMatches').innerText = 5; // mock value
+      document.getElementById('pendingRequests').innerText = 2; // mock
+      document.getElementById('donorMatches').innerText = 5; // mock
     }
 
     function requestBlood() {
-      alert("Redirecting to Blood Request Form...");
+      window.location.href = "request.html";
     }
 
     window.onload = loadDashboard;
