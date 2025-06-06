@@ -3,11 +3,12 @@
 
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Home</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Blood Bank - Interactive</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
 
   <style>
+    /* Reset & base */
     * {
       margin: 0;
       padding: 0;
@@ -18,8 +19,11 @@
       font-family: 'Poppins', sans-serif;
       background: #fff8f8;
       color: #333;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
     }
 
+    /* Sticky header with shadow on scroll */
     header {
       background-color: #b71c1c;
       padding: 15px 20px;
@@ -28,11 +32,21 @@
       align-items: center;
       flex-wrap: wrap;
       color: white;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      transition: background-color 0.3s, box-shadow 0.3s;
+    }
+
+    header.scrolled {
+      background-color: #f05151;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     }
 
     header .logo {
-      font-size: 1.6rem;
-      font-weight: bold;
+      font-size: 1.8rem;
+      font-weight: 700;
+      letter-spacing: 2px;
     }
 
     nav ul {
@@ -44,88 +58,150 @@
     nav ul li a {
       color: white;
       text-decoration: none;
-      font-weight: 500;
-      transition: 0.3s;
+      font-weight: 600;
+      padding: 6px 10px;
+      border-radius: 5px;
+      transition: background-color 0.25s, color 0.25s;
     }
 
-    nav ul li a:hover {
-      color: #ffcccb;
+    nav ul li a:hover,
+    nav ul li a.active {
+      background-color: #ffcccb;
+      color: #d25b5b;
+      font-weight: 700;
     }
 
+    /* Hero section */
     .hero {
-      background: url('https://images.unsplash.com/photo-1582719478170-ef33dfb29b80?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80') center/cover no-repeat;
+      background: url('https://images.unsplash.com/photo-1582719478170-ef33dfb29b80?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80')
+        center/cover no-repeat;
       color: white;
       text-align: center;
-      padding: 100px 20px;
+      padding: 120px 20px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(188, 59, 59, 0.85);
+      z-index: 0;
     }
 
     .hero-content {
-      background-color: rgba(183, 28, 28, 0.85);
-      padding: 50px;
-      border-radius: 12px;
-      display: inline-block;
+      position: relative;
+      z-index: 1;
       max-width: 700px;
+      margin: 0 auto;
+      animation: fadeInUp 1.5s ease forwards;
     }
 
     .hero h1 {
-      font-size: 2.5rem;
+      font-size: 3rem;
       margin-bottom: 20px;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
+      letter-spacing: 1.5px;
     }
 
     .hero p {
-      font-size: 1.2rem;
-      margin-bottom: 30px;
+      font-size: 1.4rem;
+      margin-bottom: 40px;
+      font-weight: 500;
+      text-shadow: 0 1px 6px rgba(0, 0, 0, 0.6);
     }
 
-    .hero .buttons a {
+    /* Buttons */
+    .buttons a {
       text-decoration: none;
-      padding: 12px 24px;
+      padding: 14px 36px;
       margin: 10px;
       border-radius: 30px;
-      font-weight: bold;
+      font-weight: 700;
       display: inline-block;
-      transition: 0.3s;
+      transition: all 0.4s ease;
+      box-shadow: 0 4px 15px rgba(255, 255, 255, 0.6);
     }
 
     .btn-red {
       background: #fff;
-      color: #b71c1c;
+      color: #d55454;
       border: 2px solid #fff;
+      transform-origin: center;
     }
 
     .btn-red:hover {
       background: transparent;
       color: white;
+      border-color: white;
+      box-shadow: 0 0 30px #ff8a8a;
+      transform: scale(1.1);
     }
 
     .btn-white {
       background: transparent;
       color: white;
       border: 2px solid #fff;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.7);
+      transform-origin: center;
     }
 
     .btn-white:hover {
       background: white;
-      color: #b71c1c;
+      color: #dc4242;
+      box-shadow: 0 4px 20px #f15f5f;
+      transform: scale(1.1);
     }
 
+    /* Sections */
     .section {
       padding: 60px 20px;
       text-align: center;
+      opacity: 0;
+      transform: translateY(50px);
+      transition: all 0.8s ease;
+      max-width: 900px;
+      margin: auto;
+    }
+
+    .section.visible {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     .section h2 {
-      font-size: 2rem;
-      color: #b71c1c;
+      font-size: 2.5rem;
+      color: #da6060;
       margin-bottom: 20px;
+      font-weight: 700;
     }
 
     .section p,
     .section ul {
-      font-size: 1.1rem;
-      max-width: 700px;
-      margin: auto;
-      line-height: 1.6;
+      font-size: 1.2rem;
+      line-height: 1.8;
+      color: #444;
+    }
+
+    .section ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .section ul li {
+      margin: 15px 0;
+      font-size: 1.3rem;
+      position: relative;
+      padding-left: 35px;
+    }
+
+    .section ul li::before {
+      content: "🩸";
+      position: absolute;
+      left: 0;
+      top: 0;
+      font-size: 1.5rem;
     }
 
     .section-alt {
@@ -135,7 +211,7 @@
     /* Slider Section */
     .slider-section {
       background-color: #582b2b;
-      padding: 2rem 0;
+      padding: 2rem 0 3rem;
       position: relative;
       display: flex;
       align-items: center;
@@ -151,12 +227,11 @@
       scroll-snap-type: x mandatory;
 
       /* Hide scrollbar */
-      -ms-overflow-style: none; /* IE and Edge */
-       scrollbar-width: none;/* Firefox */
+      -ms-overflow-style: none;
     }
 
     .slider-wrapper::-webkit-scrollbar {
-      display: none; /* Chrome, Safari, Opera */
+      display: none;
     }
 
     .card {
@@ -164,79 +239,143 @@
       scroll-snap-align: start;
       width: 280px;
       background: #fff;
-      border-radius: 16px;
-      padding: 1.5rem;
+      border-radius: 20px;
+      padding: 1.5rem 2rem;
       text-align: center;
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      cursor: pointer;
+    }
+
+    .card:hover {
+      transform: scale(1.07);
+      box-shadow: 0 20px 30px rgba(183, 28, 28, 0.7);
     }
 
     .card img {
-      width: 40px;
-      height: 40px;
+      width: 50px;
+      height: 50px;
       margin-bottom: 1rem;
-      opacity: 0.6;
+      opacity: 0.7;
+      transition: opacity 0.3s ease;
+    }
+
+    .card:hover img {
+      opacity: 1;
     }
 
     .card h3 {
-      font-size: 1.1rem;
+      font-size: 1.25rem;
       color: #333;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.7rem;
+      font-weight: 700;
     }
 
     .card p {
-      font-size: 0.9rem;
-      color: #666;
+      font-size: 1rem;
+      color: #555;
+      font-weight: 500;
     }
 
+    /* Scroll Buttons */
     .scroll-btn {
       background-color: #fff;
       border: none;
-      font-size: 2rem;
+      font-size: 2.5rem;
       color: #b71c1c;
       cursor: pointer;
-      padding: 0 10px;
-      z-index: 1;
-      transition: background 0.3s;
+      padding: 0 12px;
+      z-index: 10;
+      border-radius: 50%;
+      box-shadow: 0 4px 8px rgba(183, 28, 28, 0.3);
+      transition: background 0.3s ease, transform 0.2s ease;
     }
 
     .scroll-btn:hover {
       background-color: #ffebeb;
+      transform: scale(1.15);
+    }
+
+    .scroll-btn:active {
+      transform: scale(1);
     }
 
     .scroll-btn.left {
       position: absolute;
-      left: 0;
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%);
     }
 
     .scroll-btn.right {
       position: absolute;
-      right: 0;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
     }
 
+    /* Dots indicators */
+    .dots {
+      text-align: center;
+      margin-top: 1rem;
+    }
+
+    .dot {
+      display: inline-block;
+      width: 14px;
+      height: 14px;
+      background-color: #ff8a8a;
+      border-radius: 50%;
+      margin: 0 6px;
+      cursor: pointer;
+      opacity: 0.5;
+      transition: opacity 0.3s ease;
+    }
+
+    .dot.active {
+      opacity: 1;
+      box-shadow: 0 0 8px #ff5f5f;
+    }
+
+    /* Footer */
     footer {
       background-color: #b71c1c;
       color: white;
       text-align: center;
       padding: 15px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
     }
 
+    /* Animations */
+    @keyframes fadeInUp {
+      0% {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Responsive */
     @media (max-width: 768px) {
       nav ul {
         flex-direction: column;
-        gap: 10px;
+        gap: 12px;
         text-align: center;
       }
 
       .hero h1 {
-        font-size: 2rem;
+        font-size: 2.4rem;
       }
 
-      .hero-content {
-        padding: 30px 20px;
-      }
-
-      .scroll-btn {
-        display: none;
+      .buttons a {
+        padding: 12px 28px;
+        margin: 6px;
+        font-size: 1rem;
       }
 
       .slider-wrapper {
@@ -245,21 +384,25 @@
       }
 
       .card {
-        width: 250px;
+        width: 230px;
+      }
+
+      .scroll-btn {
+        font-size: 2rem;
+        padding: 0 8px;
       }
     }
   </style>
-
 </head>
 
 <body>
 
   <!-- Header -->
-  <header>
+  <header id="main-header">
     <div class="logo">🩸 Blood Bank</div>
     <nav>
       <ul>
-        <li><a href="index.html">Home</a></li>
+        <li><a href="index.html" class="active">Home</a></li>
         <li><a href="donate.html">Donate</a></li>
         <li><a href="request.html">Request</a></li>
         <li><a href="#">About</a></li>
@@ -281,58 +424,63 @@
   </section>
 
   <!-- About Section -->
-  <section class="section">
+  <section class="section" id="about">
     <h2>About Our Blood Bank</h2>
-    <p>We connect life-saving donors with patients in need. Our system ensures safe, quick, and reliable blood donation
-      and transfusion services, available to all.</p>
+    <p>We connect life-saving donors with patients in need. Our system ensures safe, quick, and reliable blood donation and
+      transfusion services, available to all.</p>
   </section>
 
   <!-- Why Donate Section -->
-  <section class="section section-alt">
+  <section class="section section-alt" id="why-donate">
     <h2>Why Donate Blood?</h2>
     <ul>
-      <li>🩸 One donation can save up to three lives.</li>
-      <li>💉 Blood cannot be manufactured — only donated.</li>
-      <li>⏱️ Donation is simple, quick, and safe.</li>
+      <li>One donation can save up to three lives.</li>
+      <li>Blood cannot be manufactured — only donated.</li>
+      <li>Donation is simple, quick, and safe.</li>
     </ul>
   </section>
+  <br>
+  <br>
 
   <!-- Benefits Slider Section -->
-  <section class="slider-section">
-    <button class="scroll-btn left" onclick="scrollSlider(-1)">&#10094;</button>
-    <div class="slider-wrapper" id="slider">
-      <div class="card">
+  <section class="slider-section" aria-label="Benefits Slider">
+    <button class="scroll-btn left" aria-label="Scroll Left" id="btn-left">&#10094;</button>
+    <div class="slider-wrapper" id="slider" tabindex="0" aria-live="polite" aria-atomic="true">
+      <div class="card" tabindex="0">
         <img src="https://img.icons8.com/ios/50/clock--v1.png" alt="Time Icon" />
         <h3>It's only an hour</h3>
         <p>Your blood saves lives!</p>
       </div>
-      <div class="card">
+      <div class="card" tabindex="0">
         <img src="https://img.icons8.com/ios/50/soda-cup--v1.png" alt="Refreshments" />
         <h3>You will get free refreshments after donation</h3>
         <p>Donation of blood is safe and healthy</p>
       </div>
-      <div class="card">
+      <div class="card" tabindex="0">
         <img src="https://img.icons8.com/ios/50/rupee.png" alt="Cost Icon" />
         <h3>It costs nothing</h3>
         <p>Give blood and stay healthy</p>
       </div>
-      <div class="card">
+      <div class="card" tabindex="0">
         <img src="https://img.icons8.com/ios/50/heart-health.png" alt="Heart Icon" />
         <h3>There is nothing better than saving a life</h3>
         <p>Every blood donor is a hero</p>
       </div>
-      <div class="card">
+      <div class="card" tabindex="0">
         <img src="https://img.icons8.com/ios/50/doctor.png" alt="Doctor Icon" />
         <h3>Helps Patients with Chronic Illness</h3>
         <p>Regular donations assist those with anemia and cancer treatments.</p>
       </div>
-      <div class="card">
+      <div class="card" tabindex="0">
         <img src="https://img.icons8.com/ios/50/ambulance.png" alt="Emergency Icon" />
         <h3>Supports Emergency Care</h3>
         <p>Blood donation helps save lives in accidents and surgeries.</p>
       </div>
     </div>
-    <button class="scroll-btn right" onclick="scrollSlider(1)">&#10095;</button>
+    <button class="scroll-btn right" aria-label="Scroll Right" id="btn-right">&#10095;</button>
+
+    <!-- Dots indicators -->
+    <div class="dots" id="dots-container" aria-label="Slider navigation"></div>
   </section>
 
   <!-- Footer -->
@@ -341,13 +489,80 @@
   </footer>
 
   <script>
-    function scrollSlider(direction) {
-      const slider = document.getElementById('slider');
-      const scrollAmount = 320;
-      slider.scrollBy({ left: scrollAmount * direction, behavior: 'smooth' });
-    }
-  </script>
+    // Sticky header background change on scroll
+    window.addEventListener('scroll', () => {
+      const header = document.getElementById('main-header');
+      if (window.scrollY > 50) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+    });
 
+    // Fade in sections on scroll using Intersection Observer
+    const sections = document.querySelectorAll('.section');
+    const options = { threshold: 0.2 };
+
+    const observer = new IntersectionObserver((entries, obs) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          obs.unobserve(entry.target);
+        }
+      });
+    }, options);
+
+    sections.forEach(section => observer.observe(section));
+
+    // Slider functionality with dots
+
+    const slider = document.getElementById('slider');
+    const btnLeft = document.getElementById('btn-left');
+    const btnRight = document.getElementById('btn-right');
+    const dotsContainer = document.getElementById('dots-container');
+    const cards = slider.querySelectorAll('.card');
+    const gap = parseInt(getComputedStyle(slider).gap) || 24; // fallback to 24px if gap not computed
+    const cardWidth = cards[0].offsetWidth + gap;
+
+    // Create dots
+    cards.forEach((_, i) => {
+      const dot = document.createElement('span');
+      dot.classList.add('dot');
+      if (i === 0) dot.classList.add('active');
+      dot.addEventListener('click', () => {
+        slider.scrollTo({
+          left: i * cardWidth,
+          behavior: 'smooth'
+        });
+      });
+      dotsContainer.appendChild(dot);
+    });
+
+    const dots = dotsContainer.querySelectorAll('.dot');
+
+    // Update dots on scroll
+    slider.addEventListener('scroll', () => {
+      const scrollLeft = slider.scrollLeft;
+      const index = Math.round(scrollLeft / cardWidth);
+      dots.forEach(dot => dot.classList.remove('active'));
+      if (dots[index]) dots[index].classList.add('active');
+    });
+
+    // Buttons scroll slider
+    btnLeft.addEventListener('click', () => {
+      slider.scrollBy({
+        left: -cardWidth,
+        behavior: 'smooth'
+      });
+    });
+
+    btnRight.addEventListener('click', () => {
+      slider.scrollBy({
+        left: cardWidth,
+        behavior: 'smooth'
+      });
+    });
+  </script>
 </body>
 
 </html>

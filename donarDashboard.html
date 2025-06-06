@@ -3,20 +3,39 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Donor Login</title>
+  <title>Donor Login - Interactive</title>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+
+    * {
+      box-sizing: border-box;
+    }
     body {
-      font-family: Arial, sans-serif;
-      max-width: 400px;
-      margin: 40px auto;
+      font-family: 'Inter', Arial, sans-serif;
+      min-height: 100vh;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       padding: 20px;
-      background-color: #f7f7f7;
-      border-radius: 8px;
-      box-shadow: 0 0 10px #ccc;
+      color: #333;
+    }
+    #appContainer {
+      background: #fff;
+      border-radius: 12px;
+      max-width: 450px;
+      width: 100%;
+      padding: 30px 25px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+      position: relative;
+      overflow: hidden;
     }
     h2 {
       text-align: center;
-      color: #6a1b9a;
+      font-weight: 600;
+      margin-bottom: 25px;
+      color: #4a00e0;
+      letter-spacing: 1.1px;
     }
     form {
       display: flex;
@@ -24,73 +43,188 @@
       gap: 15px;
     }
     input {
-      padding: 10px;
+      padding: 12px 15px;
       font-size: 1rem;
-      border: 1px solid #aaa;
-      border-radius: 4px;
+      border-radius: 8px;
+      border: 1.8px solid #ccc;
+      transition: border-color 0.3s ease;
+      outline-offset: 2px;
+      outline-color: transparent;
+    }
+    input:focus {
+      border-color: #4a00e0;
+      outline-color: #a9a9ff66;
     }
     button {
-      padding: 10px;
-      font-size: 1rem;
-      background-color: #6a1b9a;
-      color: white;
+      padding: 12px 15px;
+      background: #4a00e0;
       border: none;
-      border-radius: 4px;
+      color: #fff;
+      font-weight: 600;
+      font-size: 1rem;
+      border-radius: 8px;
       cursor: pointer;
+      transition: background-color 0.25s ease;
+      box-shadow: 0 5px 15px rgba(74,0,224,0.4);
     }
     button:hover {
-      background-color: #4a0f6e;
+      background: #6c00ff;
+      box-shadow: 0 8px 18px rgba(108,0,255,0.5);
     }
     #donorDataContainer {
       margin-top: 30px;
-      background-color: #fff;
-      padding: 15px;
-      border-radius: 6px;
-      box-shadow: 0 0 6px #bbb;
+      background: #fafafa;
+      border-radius: 10px;
+      padding: 20px 25px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      opacity: 0;
+      max-height: 0;
+      overflow: hidden;
+      transition: opacity 0.4s ease, max-height 0.5s ease;
+    }
+    #donorDataContainer.visible {
+      opacity: 1;
+      max-height: 1000px;
+    }
+    #donorDataContainer h3 {
+      color: #4a00e0;
+      margin-bottom: 15px;
+      font-weight: 700;
     }
     #donorDataContainer ul {
-      list-style-type: none;
+      list-style: none;
       padding-left: 0;
+      margin: 0;
+      color: #555;
     }
     #donorDataContainer li {
-      padding: 6px 0;
-      border-bottom: 1px solid #eee;
+      padding: 8px 0;
+      border-bottom: 1px solid #ddd;
+      font-size: 0.95rem;
     }
-    #actionButtons {
+    #showUpdateBtn {
       margin-top: 20px;
+      width: 100%;
+      background-color: #6c00ff;
+      font-weight: 600;
+      letter-spacing: 0.7px;
+      transition: background-color 0.3s ease;
+    }
+    #showUpdateBtn:hover {
+      background-color: #8b35ff;
+    }
+    #updateFormContainer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.5s ease;
+      background: #f3f1ff;
+      margin-top: 25px;
+      border-radius: 10px;
+      padding: 0 20px;
+      box-shadow: inset 0 0 12px rgba(74,0,224,0.1);
+    }
+    #updateFormContainer.visible {
+      max-height: 550px; /* Enough for form + button */
+      padding-top: 25px;
+      padding-bottom: 25px;
+    }
+    #updateForm {
       display: flex;
-      justify-content: space-between;
-      gap: 10px;
+      flex-direction: column;
+      gap: 12px;
     }
-    #actionButtons button {
-      flex: 1;
-      background-color: #4285f4;
+    #updateForm input {
+      border: 1.5px solid #aaa;
+      padding: 10px 15px;
+      font-size: 1rem;
+      border-radius: 8px;
+      transition: border-color 0.3s ease;
     }
-    #actionButtons button:hover {
-      background-color: #3367d6;
+    #updateForm input:focus {
+      border-color: #4a00e0;
+      outline-color: #a9a9ff66;
+      outline-offset: 2px;
+    }
+    #updateForm button {
+      margin-top: 10px;
+      background-color: #4a00e0;
+      font-weight: 700;
+      letter-spacing: 0.7px;
+      box-shadow: 0 5px 15px rgba(74,0,224,0.4);
+    }
+    #updateForm button:hover {
+      background-color: #6c00ff;
+      box-shadow: 0 8px 18px rgba(108,0,255,0.5);
+    }
+    #messageBox {
+      margin-top: 15px;
+      padding: 12px;
+      border-radius: 8px;
+      font-weight: 600;
+      display: none;
+    }
+    #messageBox.success {
+      background-color: #d4edda;
+      color: #155724;
+      border: 1.5px solid #c3e6cb;
+    }
+    #messageBox.error {
+      background-color: #f8d7da;
+      color: #721c24;
+      border: 1.5px solid #f5c6cb;
+    }
+    @media (max-width: 500px) {
+      #appContainer {
+        padding: 20px 15px;
+      }
+      button, input {
+        font-size: 0.9rem;
+      }
     }
   </style>
 </head>
 <body>
 
-  <h2>Donor Login</h2>
+  <div id="appContainer">
+    <h2>Donor Login</h2>
 
-  <form id="loginForm">
-    <input type="text" id="username" placeholder="Username" required />
-    <input type="password" id="password" placeholder="Password" required />
-    <button type="submit">Login</button>
-  </form>
+    <form id="loginForm" autocomplete="off">
+      <input type="text" id="username" placeholder="Username" required autocomplete="username" />
+      <input type="password" id="password" placeholder="Password" required autocomplete="current-password" />
+      <button type="submit">Login</button>
+    </form>
 
-  <div id="donorDataContainer"></div>
+    <div id="donorDataContainer" aria-live="polite"></div>
+
+    <div id="messageBox" role="alert"></div>
+  </div>
 
   <script>
     const LOGIN_URL = "http://localhost:9090/donors/login";
+    const UPDATE_URL = "http://localhost:9090/donors/update";
+
+    let currentDonor = null;
+
+    const donorDataContainer = document.getElementById('donorDataContainer');
+    const messageBox = document.getElementById('messageBox');
+
+    function showMessage(message, type = "success") {
+      messageBox.textContent = message;
+      messageBox.className = "";
+      messageBox.classList.add(type);
+      messageBox.style.display = "block";
+      setTimeout(() => {
+        messageBox.style.opacity = "1";
+      }, 10);
+      setTimeout(() => {
+        messageBox.style.opacity = "0";
+        setTimeout(() => { messageBox.style.display = "none"; }, 400);
+      }, 3500);
+    }
 
     function displayDonorData(donor) {
-      const container = document.getElementById("donorDataContainer");
-      if (!container) return;
-
-      container.innerHTML = `
+      currentDonor = donor;
+      donorDataContainer.innerHTML = `
         <h3>Welcome, ${donor.fullName || donor.username}!</h3>
         <ul>
           <li><strong>ID:</strong> ${donor.id}</li>
@@ -98,12 +232,89 @@
           <li><strong>Email:</strong> ${donor.email || 'N/A'}</li>
           <li><strong>Blood Group:</strong> ${donor.bloodGroup || 'N/A'}</li>
           <li><strong>Contact Number:</strong> ${donor.phone || 'N/A'}</li>
-          <li><strong>Gender:</strong> ${donor.age || 'N/A'}</li>
+          <li><strong>Age:</strong> ${donor.age || 'N/A'}</li>
         </ul>
-        
-      `; 
+        <button id="showUpdateBtn" aria-expanded="false" aria-controls="updateFormContainer">Update Your Info</button>
+        <div id="updateFormContainer" aria-hidden="true"></div>
+      `;
+      donorDataContainer.classList.add("visible");
 
+      document.getElementById("showUpdateBtn").addEventListener("click", () => {
+        toggleUpdateForm();
+      });
+    }
+
+    function toggleUpdateForm() {
+      const container = document.getElementById("updateFormContainer");
+      const btn = document.getElementById("showUpdateBtn");
+      const isVisible = container.classList.toggle("visible");
+
+      btn.setAttribute("aria-expanded", isVisible);
+      container.setAttribute("aria-hidden", !isVisible);
+
+      if (isVisible) {
+        showUpdateForm(currentDonor);
+        btn.textContent = "Cancel Update";
+      } else {
+        container.innerHTML = "";
+        btn.textContent = "Update Your Info";
       }
+    }
+
+    function showUpdateForm(donor) {
+      const container = document.getElementById("updateFormContainer");
+      container.innerHTML = `
+        <form id="updateForm" novalidate>
+          <input type="text" id="fullName" placeholder="Full Name" value="${donor.fullName || ''}" required minlength="2" />
+          <input type="email" id="email" placeholder="Email" value="${donor.email || ''}" required />
+          <input type="text" id="bloodGroup" placeholder="Blood Group" value="${donor.bloodGroup || ''}" required pattern="^(A|B|AB|O)[+-]$" title="Valid blood groups: A+, A-, B+, B-, AB+, AB-, O+, O-" />
+          <input type="tel" id="phone" placeholder="Contact Number" value="${donor.phone || ''}" required pattern="^\\d{10,15}$" title="Enter a valid phone number (10-15 digits)" />
+          <input type="number" id="age" placeholder="Age" value="${donor.age || ''}" required min="18" max="100" />
+          <button type="submit">Save Changes</button>
+        </form>
+      `;
+
+      const updateForm = document.getElementById("updateForm");
+
+      updateForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        if (!updateForm.checkValidity()) {
+          updateForm.reportValidity();
+          return;
+        }
+
+        const updatedData = {
+          id: donor.id,
+          fullName: updateForm.fullName.value.trim(),
+          email: updateForm.email.value.trim(),
+          bloodGroup: updateForm.bloodGroup.value.trim().toUpperCase(),
+          phone: updateForm.phone.value.trim(),
+          age: parseInt(updateForm.age.value.trim()),
+          username: donor.username,
+        };
+
+        try {
+          const response = await fetch(UPDATE_URL, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(updatedData),
+          });
+
+          if (response.ok) {
+            const updatedDonor = await response.json();
+            showMessage("Information updated successfully!", "success");
+            displayDonorData(updatedDonor);
+            toggleUpdateForm(); // close the update form
+          } else {
+            const errMsg = await response.text();
+            showMessage("Update failed: " + errMsg, "error");
+          }
+        } catch (error) {
+          showMessage("Network error: " + error.message, "error");
+        }
+      });
+    }
 
     async function loginDonor(username, password) {
       try {
@@ -117,40 +328,35 @@
 
         if (response.ok) {
           const donorData = await response.json();
-          console.log("Login successful:", donorData);
-          alert("Login successful! Welcome " + donorData.username);
-
-          // Show donor data on page
+          showMessage("Login successful! Welcome " + donorData.username, "success");
           displayDonorData(donorData);
-
         } else if (response.status === 401) {
-          alert("Invalid username or password");
+          showMessage("Invalid username or password", "error");
         } else {
           const errorMsg = await response.text();
-          alert("Login error: " + errorMsg);
+          showMessage("Login error: " + errorMsg, "error");
         }
       } catch (error) {
-        alert("Network error: " + error.message);
+        showMessage("Network error: " + error.message, "error");
       }
     }
 
     document.addEventListener("DOMContentLoaded", () => {
       const loginForm = document.getElementById("loginForm");
-      if (!loginForm) return;
 
       loginForm.addEventListener("submit", (e) => {
         e.preventDefault();
-        const username = loginForm.querySelector("#username").value.trim();
-        const password = loginForm.querySelector("#password").value.trim();
+        const username = loginForm.username.value.trim();
+        const password = loginForm.password.value.trim();
 
         if (username && password) {
           loginDonor(username, password);
         } else {
-          alert("Please enter username and password");
+          showMessage("Please enter username and password", "error");
         }
       });
     });
   </script>
-  
+
 </body>
 </html>
