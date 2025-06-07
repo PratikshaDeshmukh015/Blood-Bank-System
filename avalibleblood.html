@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Available Blood Units</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #f5f7fa, #c3cfe2);
+      padding: 40px 20px;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+    }
+    .container {
+      width: 100%;
+      max-width: 700px;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 12px 25px rgba(0,0,0,0.1);
+      padding: 30px;
+      animation: fadeIn 0.8s ease;
+    }
+    h2 {
+      color: #b80000;
+      text-align: center;
+      font-size: 2.2rem;
+      margin-bottom: 25px;
+      letter-spacing: 1px;
+    }
+    table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0 12px;
+    }
+    th, td {
+      padding: 14px 20px;
+      text-align: center;
+      font-size: 1rem;
+      vertical-align: middle;
+    }
+    th {
+      background: #b80000;
+      color: #fff;
+      font-weight: 700;
+      border-radius: 8px 8px 0 0;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+    }
+    tbody tr {
+      background: #fff0f0;
+      box-shadow: 0 6px 10px rgba(184, 0, 0, 0.1);
+      border-radius: 10px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: default;
+    }
+    tbody tr:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 25px rgba(184, 0, 0, 0.25);
+      background: #ffe5e5;
+    }
+    /* Blood group badge */
+    .badge {
+      display: inline-block;
+      padding: 6px 14px;
+      border-radius: 30px;
+      font-weight: 600;
+      color: white;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    }
+    /* Color variants for blood groups */
+    .A { background-color: #d32f2f; }
+    .B { background-color: #1976d2; }
+    .AB { background-color: #fbc02d; color: #333; }
+    .O { background-color: #388e3c; }
+
+    /* Progress bar container */
+    .progress-container {
+      width: 100%;
+      height: 16px;
+      background: #ffd6d6;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+      margin-top: 6px;
+    }
+    /* Progress bar fill */
+    .progress-bar {
+      height: 100%;
+      background-color: #b80000;
+      transition: width 0.6s ease;
+    }
+
+    /* Responsive */
+    @media (max-width: 480px) {
+      th, td {
+        padding: 12px 10px;
+        font-size: 0.9rem;
+      }
+      .container {
+        padding: 20px 15px;
+      }
+      h2 {
+        font-size: 1.8rem;
+      }
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .footer {
+      margin-top: 25px;
+      text-align: center;
+      font-size: 14px;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Available Blood Units</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Blood Group</th>
+          <th>Units Available</th>
+        </tr>
+      </thead>
+      <tbody id="bloodTableBody"></tbody>
+    </table>
+    <div class="footer">Updated live from Blood Bank Records</div>
+  </div>
+
+  <script>
+    const BLOOD_REQUESTS_URL = "http://localhost:9090/blood/available";
+
+    // Maximum units expected for scaling progress bar
+    const MAX_UNITS = 50;
+
+    function fetchBloodAvailability() {
+      fetch(BLOOD_REQUESTS_URL)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(`Error fetching blood data: ${response.statusText}`);
+          }
+          return response.json();
+        })
+        .then(data => {
+          displayBloodAvailability(data);
+        })
+        .catch(error => {
+          console.error("Fetch error:", error);
+          document.getElementById("bloodTableBody").innerHTML =
+            `<tr><td colspan="2" style="color:red; text-align:center;">Failed to load blood availability data.</td></tr>`;
+        });
+    }
+
+    function displayBloodAvailability(data) {
+      const tableBody = document.getElementById("bloodTableBody");
+      tableBody.innerHTML = "";
+
+      if (!data || data.length === 0) {
+        tableBody.innerHTML = `<tr><td colspan="2" style="text-align:center;">No data available</td></tr>`;
+        return;
+      }
+
+      data.forEach(item => {
+        const units = item.units ?? item.availableUnits ?? 0;
+        const groupRaw = item.bloodGroup ?? "Unknown";
+
+        // Clean blood group string to upper case (like A, B, AB, O)
+        const group = groupRaw.toUpperCase();
+
+        // Get badge class by blood group prefix
+        let badgeClass = "O";
+        if (group.includes("A") && group.includes("B")) badgeClass = "AB";
+        else if (group.includes("A")) badgeClass = "A";
+        else if (group.includes("B")) badgeClass = "B";
+
+        // Calculate progress bar width (max 100%)
+        let progressWidth = Math.min((units / MAX_UNITS) * 100, 100);
+
+        // Create row with badge and progress bar
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td><span class="badge ${badgeClass}">${group}</span></td>
+          <td>
+            ${units}
+            <div class="progress-container" aria-label="Units available progress bar">
+              <div class="progress-bar" style="width:${progressWidth}%;"></div>
+            </div>
+          </td>
+        `;
+        tableBody.appendChild(row);
+      });
+    }
+
+    window.addEventListener('DOMContentLoaded', fetchBloodAvailability);
+  </script>
+</body>
+</html>

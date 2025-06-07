@@ -87,6 +87,22 @@
     .error-message {
       color: red;
     }
+
+    .link-container {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .centered-link {
+      text-decoration: none;
+      color: #6a1b9a;
+      font-weight: bold;
+    }
+
+    .centered-link:hover {
+      text-decoration: underline;
+      color: #4a0f6e;
+    }
   </style>
 </head>
 <body>
@@ -113,6 +129,9 @@
         <option value="AB-">AB-</option>
       </select>
 
+      <label for="units">Units Donated</label>
+      <input type="number" id="units" required placeholder="Enter number of blood units" />
+
       <label for="phone">Phone Number</label>
       <input type="text" id="phone" required placeholder="Enter your contact number" />
 
@@ -125,44 +144,15 @@
       <label for="password">Password</label>
       <input type="password" id="password" required placeholder="Create a password" />
 
-       <button type="submit">Register</button>
-<style>
-  /* Center the container */
-  .link-container {
-    text-align: center;
-    margin-top: 20px;
-  }
+      <button type="submit">Register</button>
 
-  /* Link styles */
-  .centered-link {
-    text-decoration: none; /* remove underline */
-    color: #6a1b9a;        /* purple color */
-    font-weight: bold;
-  }
-
-  .centered-link:hover {
-    text-decoration: underline; /* show underline on hover */
-    color: #4a0f6e;              /* darker purple on hover */
-  }
-</style>
-
-<div class="link-container">
-    <a href="donarDashboard.html" class="centered-link">Login</a>
-  </div>
-
-
-
-       <!-- <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px;">
-  <button type="submit">Register</button>
-  <a href="login1.html" style="text-decoration: none; color: #d60000; font-weight: bold;">Login</a> -->
-</div>
-
+      <div class="link-container">
+        <a href="donarDashboard.html" class="centered-link">Login</a>
+      </div>
     </form>
-
   </div>
-   <script src="donarRegister.js"></script>
 
-
+  <script src="donarRegister.js"></script>
 
 </body>
 </html>

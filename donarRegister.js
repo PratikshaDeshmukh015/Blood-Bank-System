@@ -1,4 +1,3 @@
-
 const BASE_URL = "http://localhost:9090/donors/register";
 
 function registerDonor(event) {
@@ -12,15 +11,16 @@ function registerDonor(event) {
     phone: document.getElementById("phone").value.trim(),
     email: document.getElementById("email").value.trim(),
     username: document.getElementById("username").value.trim(),
-    password: document.getElementById("password").value.trim()
+    password: document.getElementById("password").value.trim(),
+    units: parseInt(document.getElementById("units").value) // ✅ NEW FIELD
   };
 
   // Validate fields
   if (
     !donor.name || !donor.age || !donor.bloodGroup || !donor.phone ||
-    !donor.email || !donor.username || !donor.password
+    !donor.email || !donor.username || !donor.password || isNaN(donor.units)
   ) {
-    alert("Please fill in all fields.");
+    alert("Please fill in all fields including units.");
     return;
   }
 
@@ -40,12 +40,9 @@ function registerDonor(event) {
   })
   .then(message => {
     alert(message);
-    // document.getElementById("donorForm").reset(); // Clear form after success
-     window.location.href = "donate.html";
-
+    window.location.href = "donate.html";
   })
   .catch(error => {
     alert("Error: " + error.message);
   });
 }
-

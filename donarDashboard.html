@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Donor Login - Interactive</title>
   <style>
+    /* (Include all the CSS from your last message here) */
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
 
     * {
@@ -124,7 +125,7 @@
       box-shadow: inset 0 0 12px rgba(74,0,224,0.1);
     }
     #updateFormContainer.visible {
-      max-height: 550px; /* Enough for form + button */
+      max-height: 550px;
       padding-top: 25px;
       padding-bottom: 25px;
     }
@@ -305,58 +306,51 @@
             const updatedDonor = await response.json();
             showMessage("Information updated successfully!", "success");
             displayDonorData(updatedDonor);
-            toggleUpdateForm(); // close the update form
+            toggleUpdateForm(); // Close form
           } else {
             const errMsg = await response.text();
             showMessage("Update failed: " + errMsg, "error");
           }
         } catch (error) {
-          showMessage("Network error: " + error.message, "error");
+          showMessage("Update error: " + error.message, "error");
         }
       });
     }
 
-    async function loginDonor(username, password) {
+    const loginForm = document.getElementById('loginForm');
+    loginForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const username = loginForm.username.value.trim();
+      const password = loginForm.password.value.trim();
+
+      if (!username || !password) {
+        showMessage("Please enter both username and password.", "error");
+        return;
+      }
+
       try {
         const response = await fetch(LOGIN_URL, {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ username, password }),
         });
 
         if (response.ok) {
-          const donorData = await response.json();
-          showMessage("Login successful! Welcome " + donorData.username, "success");
-          displayDonorData(donorData);
+          const donor = await response.json();
+          showMessage("Login successful!", "success");
+          displayDonorData(donor);
+          loginForm.style.display = "none";
         } else if (response.status === 401) {
-          showMessage("Invalid username or password", "error");
+          showMessage("Invalid username or password.", "error");
         } else {
-          const errorMsg = await response.text();
-          showMessage("Login error: " + errorMsg, "error");
+          const errMsg = await response.text();
+          showMessage("Login failed: " + errMsg, "error");
         }
       } catch (error) {
-        showMessage("Network error: " + error.message, "error");
+        showMessage("Login error: " + error.message, "error");
       }
-    }
-
-    document.addEventListener("DOMContentLoaded", () => {
-      const loginForm = document.getElementById("loginForm");
-
-      loginForm.addEventListener("submit", (e) => {
-        e.preventDefault();
-        const username = loginForm.username.value.trim();
-        const password = loginForm.password.value.trim();
-
-        if (username && password) {
-          loginDonor(username, password);
-        } else {
-          showMessage("Please enter username and password", "error");
-        }
-      });
     });
   </script>
-
 </body>
 </html>
