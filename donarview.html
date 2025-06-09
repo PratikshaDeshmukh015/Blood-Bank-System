@@ -4,61 +4,91 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>View Donors</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
     * {
       box-sizing: border-box;
     }
-
     body {
       font-family: 'Poppins', sans-serif;
-      background: linear-gradient(to right, #ffe5e5, #fff);
+      background: linear-gradient(to right, #fff0f0, #fff);
       padding: 2rem;
       margin: 0;
     }
-
     h2 {
       text-align: center;
       color: #b80000;
-      margin-bottom: 2rem;
+      margin-bottom: 1rem;
     }
-
+    .search-box {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .search-box input {
+      padding: 10px 15px;
+      width: 60%;
+      max-width: 400px;
+      border: 2px solid #b80000;
+      border-radius: 8px;
+      font-size: 16px;
+      transition: 0.3s;
+    }
+    .search-box input:focus {
+      outline: none;
+      box-shadow: 0 0 10px #ff4d4d;
+    }
     table {
       width: 100%;
       border-collapse: collapse;
-      margin: auto;
-      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+      margin-top: 10px;
+      background-color: white;
       border-radius: 10px;
       overflow: hidden;
-      background-color: white;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
     }
-
     thead {
       background-color: #b80000;
       color: white;
     }
-
     th, td {
       padding: 1rem;
       text-align: center;
       border-bottom: 1px solid #ddd;
     }
-
     tbody tr:hover {
       background-color: #ffe5e5;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
+      transition: 0.3s ease;
     }
-
+    .btn {
+      padding: 6px 12px;
+      font-size: 0.9rem;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: 0.3s;
+      margin: 0 3px;
+    }
+    .btn-update {
+      background-color: #007bff;
+      color: white;
+    }
+    .btn-update:hover {
+      background-color: #0056b3;
+    }
+    .btn-delete {
+      background-color: #dc3545;
+      color: white;
+    }
+    .btn-delete:hover {
+      background-color: #b00020;
+    }
     @media (max-width: 768px) {
       table, thead, tbody, th, td, tr {
         display: block;
       }
-
       thead {
         display: none;
       }
-
       td {
         position: relative;
         padding-left: 50%;
@@ -66,7 +96,6 @@
         border: none;
         border-bottom: 1px solid #ccc;
       }
-
       td::before {
         content: attr(data-label);
         position: absolute;
@@ -83,6 +112,10 @@
 
   <h2>🩸 Donor List</h2>
 
+  <div class="search-box">
+    <input type="text" id="searchInput" placeholder="Search by name, blood group or username...">
+  </div>
+
   <table>
     <thead>
       <tr>
@@ -90,17 +123,93 @@
         <th>Name</th>
         <th>Age</th>
         <th>Blood Group</th>
-        <th>Email</th>
+        <th>Units</th>
         <th>Phone</th>
-        <th>Location</th>
+        <th>Email</th>
+        <th>Username</th>
+        <th>Password</th>
+        <th>Actions</th>
       </tr>
     </thead>
     <tbody id="donorTableBody">
-      <!-- Populated by JS -->
+      <!-- Rows will be populated here -->
     </tbody>
   </table>
 
   <script src="donarview.js"></script>
   <script src="delete.js"></script>
+  <script>
+    // Search filter functionality
+    const searchInput = document.getElementById("searchInput");
+    searchInput.addEventListener("input", () => {
+      const filter = searchInput.value.toLowerCase();
+      const rows = document.querySelectorAll("#donorTableBody tr");
+      rows.forEach(row => {
+        const name = row.children[1]?.textContent.toLowerCase();
+        const bloodGroup = row.children[3]?.textContent.toLowerCase();
+        const username = row.children[7]?.textContent.toLowerCase();
+        if (name.includes(filter) || bloodGroup.includes(filter) || username.includes(filter)) {
+          row.style.display = "";
+        } else {
+          row.style.display = "none";
+        }
+      });
+    });
+
+    // Placeholder for updateDonor function
+    function updateDonor(id) {
+window.location.href = `updatedonar.html?id=${id}`;      // You can navigate to update form or open modal here
+    }
+
+    // delete.js
+
+// Attach event listener to the table body for delete button clicks
+document.addEventListener("DOMContentLoaded", () => {
+  const donorTableBody = document.getElementById("donorTableBody");
+
+  donorTableBody.addEventListener("click", function (event) {
+    if (event.target.classList.contains("btn-delete")) {
+      const id = event.target.dataset.id;
+      if (!id) {
+        alert("Donor ID not found!");
+        return;
+      }
+      if (confirm(`Are you sure you want to delete donor with ID: ${id}?`)) {
+        deleteDonor(id);
+      }
+    }
+  });
+});
+
+function deleteDonor(id) {
+  fetch(`http://localhost:9090/donors/delete/${id}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then((response) => {
+      if (response.ok) {
+        alert(`Donor with ID ${id} deleted successfully.`);
+        // Remove the table row
+        const deleteBtn = document.querySelector(`button.btn-delete[data-id="${id}"]`);
+        if (deleteBtn) {
+          const row = deleteBtn.closest("tr");
+          if (row) row.remove();
+        }
+      } else {
+        // If response is not ok, try to get error text and throw error
+        return response.text().then((text) => {
+          throw new Error(text || "Delete failed");
+        });
+      }
+    })
+    .catch((error) => {
+      alert(`Error deleting donor: ${error.message}`);
+    });
+}
+
+  </script>
+
 </body>
 </html>

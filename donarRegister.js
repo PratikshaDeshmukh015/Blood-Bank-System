@@ -40,7 +40,7 @@ function registerDonor(event) {
   })
   .then(message => {
     alert(message);
-    window.location.href = "donate.html";
+    window.location.href = "thankyou.html";
   })
   .catch(error => {
     alert("Error: " + error.message);

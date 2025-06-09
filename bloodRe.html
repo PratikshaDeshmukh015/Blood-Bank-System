@@ -58,9 +58,13 @@
       background-color: #f9f9f9;
     }
 
-    .back-btn {
-      margin-top: 1rem;
-      display: inline-block;
+    .btn-group {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 1.5rem;
+    }
+
+    .btn {
       background: #d90429;
       color: white;
       padding: 0.7rem 1.2rem;
@@ -69,9 +73,10 @@
       cursor: pointer;
       text-decoration: none;
       font-size: 1rem;
+      transition: background 0.3s ease;
     }
 
-    .back-btn:hover {
+    .btn:hover {
       background: #a00000;
     }
   </style>
@@ -96,12 +101,13 @@
       </tbody>
     </table>
 
-    <a href="dashboard.html" class="back-btn">← Back to Dashboard</a>
+    <div class="btn-group">
+      <a href="dashboard.html" class="btn">← Back to Dashboard</a>
+      <a href="donarRegister.html" class="btn">📝 Donate Blood</a>
+      <a href="request.html" class="btn">📝 Request Blood</a>
+    </div>
   </div>
-     <script src="bloodRe.js"></script>
 
-
- 
-
+  <script src="bloodRe.js"></script>
 </body>
 </html>

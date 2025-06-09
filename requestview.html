@@ -2,62 +2,373 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>View Blood Requests</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Blood Requests - Interactive</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+
+  <!-- FontAwesome for icons -->
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
   <style>
+    /* Reset & base */
     body {
-      font-family: Arial, sans-serif;
-      margin: 30px;
+      font-family: 'Inter', Arial, sans-serif;
+      background: #f0f4f8;
+      margin: 0;
+      padding: 40px 20px;
+      color: #333;
+      min-height: 100vh;
     }
 
     h2 {
-      color: #d60000;
       text-align: center;
+      color: #b80000;
+      font-weight: 700;
+      font-size: 2rem;
+      margin-bottom: 20px;
+      letter-spacing: 1px;
     }
 
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      background: white;
+      padding: 25px 30px 40px;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgb(0 0 0 / 0.1);
+    }
+
+    /* Search input */
+    .search-wrapper {
+      max-width: 350px;
+      margin: 0 auto 25px auto;
+      position: relative;
+    }
+
+    .search-wrapper input {
+      width: 100%;
+      padding: 10px 40px 10px 15px;
+      border-radius: 25px;
+      border: 1.8px solid #ddd;
+      font-size: 1rem;
+      transition: border-color 0.3s ease;
+    }
+
+    .search-wrapper input:focus {
+      outline: none;
+      border-color: #b80000;
+      box-shadow: 0 0 8px rgba(184, 0, 0, 0.4);
+    }
+
+    .search-wrapper .fa-search {
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #b80000;
+      pointer-events: none;
+    }
+
+    /* Table styling */
     table {
       width: 100%;
-      border-collapse: collapse;
-      margin-top: 20px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      border-collapse: separate;
+      border-spacing: 0 10px;
+      font-size: 0.95rem;
     }
 
-    th, td {
-      padding: 10px;
-      border: 1px solid #ddd;
+    thead th {
+      background-color: #f7f7f7;
+      color: #555;
+      font-weight: 600;
+      padding: 12px 15px;
+      border-radius: 8px 8px 0 0;
       text-align: center;
+      letter-spacing: 0.02em;
+      
     }
 
-    th {
-      background-color: #f44336;
+    tbody tr {
+      background: #fff;
+      box-shadow: 0 2px 6px rgb(0 0 0 / 0.07);
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+      cursor: default;
+      border-radius: 6px;
+      
+    }
+
+    tbody tr:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 15px rgb(184 0 0 / 0.3);
+      cursor: pointer;
+    }
+
+    td {
+      padding: 12px 15px;
+      text-align: center;
+      vertical-align: middle;
+      color: #444;
+    }
+
+    /* Buttons */
+    button {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 14px;
+      border: none;
+      border-radius: 30px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      box-shadow: 0 2px 8px rgb(0 0 0 / 0.12);
+   
+    }
+
+    .update-btn {
+      background-color: #007bff;
       color: white;
     }
+    .update-btn:hover {
+      background-color: #0056b3;
+      box-shadow: 0 4px 15px rgb(0 123 255 / 0.5);
+    }
 
-    tr:nth-child(even) {
-      background-color: #f9f9f9;
+    .delete-btn {
+      background-color: #dc3545;
+      color: white;
+    }
+    .delete-btn:hover {
+      background-color: #a71d2a;
+      box-shadow: 0 4px 15px rgb(220 53 69 / 0.5);
+    }
+
+    /* Loading spinner */
+    .spinner {
+      margin: 40px auto;
+      border: 5px solid #f3f3f3;
+      border-top: 5px solid #b80000;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      table, thead, tbody, tr, th, td {
+        display: block;
+      }
+      thead tr {
+        display: none;
+      }
+      tbody tr {
+        margin-bottom: 20px;
+        box-shadow: 0 4px 12px rgb(0 0 0 / 0.1);
+        border-radius: 10px;
+        padding: 15px;
+      }
+      tbody td {
+        text-align: right;
+        padding-left: 50%;
+        position: relative;
+        font-size: 0.95rem;
+      }
+      tbody td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 15px;
+        width: 45%;
+        padding-left: 15px;
+        font-weight: 600;
+        text-align: left;
+        color: #b80000;
+        font-size: 0.9rem;
+        top: 12px;
+      }
+      td:last-child {
+        text-align: center;
+        padding-left: 0;
+      }
     }
   </style>
 </head>
 <body>
-  <h2>Blood Request List</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>#</th>
-        <th>Name</th>
-        <th>Email</th>
-        <th>Blood Group</th>
-        <th>Units</th>
-        <th>Date</th>
-        <th>Hospital</th>
-        <th>Contact</th>
-      </tr>
-    </thead>
-    <tbody id="requestTableBody">
-      <!-- Filled by JS -->
-    </tbody>
-  </table>
 
-  <script src="requestView.js"></script>
+  <div class="container">
+    <h2>Blood Requests</h2>
+
+    <div class="search-wrapper">
+      <input type="text" id="searchInput" placeholder="Search by name, blood group, hospital..." />
+      <i class="fas fa-search"></i>
+    </div>
+
+    <div id="spinner" class="spinner" style="display:none;"></div>
+
+    <table aria-label="Blood Request List" role="grid" id="requestTable" style="display:none;">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Name</th>
+          <th scope="col">Email</th>
+          <th scope="col">Blood Group</th>
+          <th scope="col">Units</th>
+          <th scope="col">Date</th>
+          <th scope="col">Hospital</th>
+          <th scope="col">Contact</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody id="requestTableBody"></tbody>
+    </table>
+
+    <!-- Modal for confirmation -->
+    <div id="modalConfirm" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.5);">
+      <div style="background:white; padding:20px; border-radius:8px; max-width:400px; margin:100px auto; box-shadow:0 4px 12px rgba(0,0,0,0.3); text-align:center;">
+        <p id="modalText" style="font-size:1.2rem; margin-bottom:20px;"></p>
+        <button id="modalYes" style="background:#dc3545; color:#fff; padding:10px 20px; border:none; border-radius:6px; margin-right:10px; cursor:pointer;">Yes</button>
+        <button id="modalNo" style="background:#bbb; color:#333; padding:10px 20px; border:none; border-radius:6px; cursor:pointer;">No</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const BASE_URL = "http://localhost:9090/api/requests";
+
+    const tableBody = document.getElementById("requestTableBody");
+    const table = document.getElementById("requestTable");
+    const spinner = document.getElementById("spinner");
+    const searchInput = document.getElementById("searchInput");
+
+    // Modal Elements
+    const modal = document.getElementById("modalConfirm");
+    const modalText = document.getElementById("modalText");
+    const modalYes = document.getElementById("modalYes");
+    const modalNo = document.getElementById("modalNo");
+
+    let requestsData = [];
+    let deleteNumber = null;
+
+    function showSpinner(show) {
+      spinner.style.display = show ? "block" : "none";
+      table.style.display = show ? "none" : "table";
+    }
+
+    // Load and display requests on page load
+    async function loadRequests() {
+      showSpinner(true);
+      try {
+        const response = await fetch(`${BASE_URL}/all`);
+        if (!response.ok) throw new Error("Failed to fetch requests");
+        requestsData = await response.json();
+        renderTable(requestsData);
+      } catch (err) {
+        alert("Could not fetch blood requests.");
+        console.error(err);
+      } finally {
+        showSpinner(false);
+      }
+    }
+
+    function renderTable(data) {
+      tableBody.innerHTML = "";
+
+      if (data.length === 0) {
+        tableBody.innerHTML = `<tr><td colspan="9" style="text-align:center; padding:20px; color:#b80000;">No blood requests found.</td></tr>`;
+        return;
+      }
+
+      data.forEach((request, index) => {
+        const tr = document.createElement("tr");
+
+        tr.innerHTML = `
+          <td data-label="#">${index + 1}</td>
+          <td data-label="Name">${request.name}</td>
+          <td data-label="Email">${request.email}</td>
+          <td data-label="Blood Group">${request.bloodGroup}</td>
+          <td data-label="Units">${request.units}</td>
+          <td data-label="Date">${request.date}</td>
+          <td data-label="Hospital">${request.hospital}</td>
+          <td data-label="Contact">${request.contact}</td>
+          <td data-label="Actions">
+            <button class="update-btn" aria-label="Update request ${index + 1}" onclick="handleUpdate(${request.number})">
+              <i class="fas fa-edit"></i> Update
+            </button>
+            <button class="delete-btn" aria-label="Delete request ${index + 1}" onclick="openDeleteModal(${request.number}, '${request.name}')">
+              <i class="fas fa-trash-alt"></i> Delete
+            </button>
+          </td>
+        `;
+
+        tableBody.appendChild(tr);
+      });
+    }
+
+    function handleUpdate(number) {
+      window.location.href = `updaterequest.html?id=${number}`;
+    }
+
+    // Open modal instead of confirm dialog
+    function openDeleteModal(number, name) {
+      deleteNumber = number;
+      modalText.textContent = `Are you sure you want to delete the request of "${name}" (ID: ${number})?`;
+      modal.style.display = "block";
+    }
+
+    // Close modal helper
+    function closeModal() {
+      modal.style.display = "none";
+      deleteNumber = null;
+    }
+
+    // Delete request and reload
+    async function handleDelete() {
+      if (deleteNumber === null) return;
+      try {
+        const res = await fetch(`${BASE_URL}/delete/${deleteNumber}`, {
+          method: "DELETE"
+        });
+        if (res.ok) {
+          alert("Request deleted successfully!");
+          loadRequests();
+        } else {
+          alert("Failed to delete the request.");
+        }
+      } catch (err) {
+        alert("Error occurred while deleting the request.");
+        console.error(err);
+      } finally {
+        closeModal();
+      }
+    }
+
+    // Search filter function
+    function filterRequests() {
+      const filterText = searchInput.value.toLowerCase();
+      const filtered = requestsData.filter(r =>
+        r.name.toLowerCase().includes(filterText) ||
+        r.bloodGroup.toLowerCase().includes(filterText) ||
+        r.hospital.toLowerCase().includes(filterText)
+      );
+      renderTable(filtered);
+    }
+
+    // Event listeners
+    document.addEventListener("DOMContentLoaded", loadRequests);
+    searchInput.addEventListener("input", filterRequests);
+    modalYes.addEventListener("click", handleDelete);
+    modalNo.addEventListener("click", closeModal);
+    window.addEventListener("click", (e) => {
+      if (e.target === modal) closeModal();
+    });
+  </script>
+
 </body>
 </html>

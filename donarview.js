@@ -1,43 +1,75 @@
-const BASE_URL = "http://localhost:9090/api/donors/all";
+fetch("http://localhost:9090/donors/view")
+  .then(response => response.json())
+  .then(data => {
+    const tbody = document.getElementById("donorTableBody");
+    tbody.innerHTML = "";
 
-// This function fetches all donors and displays them in a table
-function fetchAllDonors() {
-  fetch(BASE_URL)
-    .then(response => {
-      if (!response.ok) {
-        throw new Error("Failed to fetch donor data");
-      }
-      return response.json();
-    })
-    .then(data => {
-      const tableBody = document.getElementById("donorTableBody");
-      tableBody.innerHTML = "";
-
-      data.forEach(donor => {
-        const row = document.createElement("tr");
-
-        row.innerHTML = `
-          <td>${donor.number}</td>
-          <td>${donor.name}</td>
-          <td>${donor.age}</td>
-          <td>${donor.bloodgroup}</td>
-          <td>${donor.email}</td>
-          <td>${donor.phone}</td>
-          <td>${donor.location}</td>
-          <td>
-                        <button onclick="deleteDonor(${donor.id})" style="background-color:red; color:white; border:none; padding:5px 10px; border-radius:5px;">Delete</button>
-                        <button onclick="updateDonor(${donor.id})" style="background-color:#ffa500; color:white; border:none; padding:5px 10px; border-radius:5px;">Update</button>
-                    </td>
-        `;
-
-        tableBody.appendChild(row);
-      });
-    })
-    .catch(error => {
-      console.error("Error:", error);
-      alert("Error fetching donor data.");
+    data.forEach(donor => {
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td>${donor.id}</td>
+        <td>${donor.name}</td>
+        <td>${donor.age}</td>
+        <td>${donor.bloodGroup}</td>
+        <td>${donor.units}</td>
+        <td>${donor.phone}</td>
+        <td>${donor.email}</td>
+        <td>${donor.username}</td>
+        <td>${donor.password}</td>
+        <td>
+          <button class="btn btn-update" onclick="updateDonor(${donor.id})">Update</button>
+          <button class="btn btn-delete" onclick="deleteDonor(${donor.id})">Delete</button>
+        </td>
+      `;
+      tbody.appendChild(row);
     });
+  })
+  .catch(error => console.error("Error loading donors:", error));
+
+// Update donor function (placeholder)
+function updateDonor(id) {
+window.location.href = `updatedonar.html?id=${id}`;  // e.g. window.location.href = `updateDonor.html?id=${id}`;
 }
 
-// Automatically fetch when page loads
-document.addEventListener("DOMContentLoaded", fetchAllDonors);
+// Delete donor function
+function deleteDonor(id) {
+  if (!confirm("Are you sure you want to delete this donor?")) return;
+
+  fetch(`http://localhost:9090/donors/${id}`, {
+    method: "DELETE",
+  })
+    .then(response => {
+      if (response.ok) {
+        alert("Donor deleted successfully");
+        // Reload donor list after deletion
+        return fetch("http://localhost:9090/donors/view");
+      } else {
+        throw new Error("Failed to delete donor");
+      }
+    })
+    .then(res => res.json())
+    .then(data => {
+      const tbody = document.getElementById("donorTableBody");
+      tbody.innerHTML = "";
+      data.forEach(donor => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${donor.id}</td>
+          <td>${donor.name}</td>
+          <td>${donor.age}</td>
+          <td>${donor.bloodGroup}</td>
+          <td>${donor.units}</td>
+          <td>${donor.phone}</td>
+          <td>${donor.email}</td>
+          <td>${donor.username}</td>
+          <td>${donor.password}</td>
+          <td>
+            <button class="btn btn-update" onclick="updateDonor(${donor.id})">Update</button>
+            <button class="btn btn-delete" onclick="deleteDonor(${donor.id})">Delete</button>
+          </td>
+        `;
+        tbody.appendChild(row);
+      });
+    })
+    .catch(error => alert(error.message));
+}

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Donate Again</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: linear-gradient(to right, #fff0f0, #ffeaea);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      text-align: center;
+      background: white;
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+      max-width: 500px;
+      width: 90%;
+    }
+
+    .container h1 {
+      color: #b80000;
+      font-size: 32px;
+      margin-bottom: 10px;
+    }
+
+    .container p {
+      font-size: 18px;
+      margin-bottom: 30px;
+      color: #555;
+    }
+
+    .donate-btn {
+      padding: 15px 30px;
+      background-color: #b80000;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .donate-btn:hover {
+      background-color: #ff1a1a;
+    }
+
+    .heart {
+      font-size: 50px;
+      color: #e60000;
+      animation: beat 1s infinite;
+      margin-bottom: 20px;
+    }
+
+    @keyframes beat {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="heart">❤️</div>
+    <h1>Donate Again</h1>
+    <p>Your last donation made a difference! Are you ready to help save more lives?</p>
+    <button class="donate-btn" onclick="redirectToDonation()">Donate Now</button>
+  </div>
+
+  <script>
+    function redirectToDonation() {
+      // Replace with your actual registration or donation form page
+      window.location.href = "donarRegister.html";
+    }
+  </script>
+
+</body>
+</html>

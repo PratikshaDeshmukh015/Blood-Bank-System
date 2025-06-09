@@ -15,7 +15,7 @@
       data.forEach(entry => {
         const row = document.createElement("tr");
         row.innerHTML = `
-          <td>${entry.donorName}</td>
+          <td>${entry.name}</td>
           <td>${entry.bloodGroup}</td>
           <td>${entry.units}</td>
           <td>${entry.date}</td>

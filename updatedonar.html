@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Update Donor</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+
+    /* Reset and base */
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Inter', Arial, sans-serif;
+      background: linear-gradient(135deg, #f9f9fb 0%, #e8f0fe 100%);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      margin: 0;
+    }
+    .container {
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      max-width: 500px;
+      width: 100%;
+      padding: 30px 40px;
+      position: relative;
+      overflow: hidden;
+      transition: box-shadow 0.3s ease;
+    }
+    .container:hover {
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 25px;
+      font-weight: 700;
+      color: #b80000;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      text-shadow: 1px 1px 2px #f44336cc;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    label {
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 5px;
+      transition: color 0.3s;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    input[type="email"],
+    input[type="password"] {
+      padding: 12px 15px;
+      font-size: 16px;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      transition: border-color 0.3s, box-shadow 0.3s;
+      outline-offset: 2px;
+    }
+    input[type="text"]:focus,
+    input[type="number"]:focus,
+    input[type="email"]:focus,
+    input[type="password"]:focus {
+      border-color: #b80000;
+      box-shadow: 0 0 8px #b80000aa;
+    }
+
+    /* Floating label effect */
+    input:not(:placeholder-shown) + label,
+    input:focus + label {
+      color: #b80000;
+      font-weight: 700;
+    }
+
+    /* Buttons */
+    button {
+      margin-top: 20px;
+      padding: 14px 0;
+      background: linear-gradient(135deg, #b80000, #e53935);
+      border: none;
+      border-radius: 10px;
+      color: white;
+      font-size: 18px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 5px 15px #e5393544;
+      transition: background 0.3s ease, box-shadow 0.3s ease;
+      
+    }
+    button:hover {
+      background: linear-gradient(135deg, #e53935, #b80000);
+      box-shadow: 0 8px 20px #e5393577;
+    }
+
+    /* Hidden input */
+    input[type="hidden"] {
+      display: none;
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .container {
+        padding: 20px 25px;
+      }
+      button {
+        font-size: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Update Donor</h2>
+    <form id="updateDonorForm" autocomplete="off">
+      <input type="hidden" id="donorId" />
+
+      <input type="text" id="name" placeholder=" " required />
+      <label for="name">Name</label>
+
+      <input type="number" id="age" placeholder=" " required min="18" max="100" />
+      <label for="age">Age</label>
+
+      <input type="text" id="bloodGroup" placeholder=" " required pattern="^(A|B|AB|O)[+-]$" title="Enter valid blood group e.g. A+, O-, AB+" />
+      <label for="bloodGroup">Blood Group</label>
+
+      <input type="number" id="units" placeholder=" " required min="1" max="10" />
+      <label for="units">Units</label>
+
+      <input type="text" id="phone" placeholder=" " required pattern="^\d{10}$" title="Enter 10 digit phone number" />
+      <label for="phone">Phone</label>
+
+      <input type="email" id="email" placeholder=" " required />
+      <label for="email">Email</label>
+
+      <input type="text" id="username" placeholder=" " required minlength="4" />
+      <label for="username">Username</label>
+
+      <input type="password" id="password" placeholder=" " required minlength="6" />
+      <label for="password">Password</label>
+
+      <button type="submit">Update Donor</button>
+    </form>
+  </div>
+
+  <script>
+    // Get donor ID from URL query params
+    const urlParams = new URLSearchParams(window.location.search);
+    const donorId = urlParams.get("id");
+
+    if (donorId) {
+      fetch(`http://localhost:9090/donors/view`)
+        .then(response => response.json())
+        .then(data => {
+          const donor = data.find(d => d.id == donorId);
+          if (donor) {
+            document.getElementById("donorId").value = donor.id;
+            document.getElementById("name").value = donor.name;
+            document.getElementById("age").value = donor.age;
+            document.getElementById("bloodGroup").value = donor.bloodGroup;
+            document.getElementById("units").value = donor.units;
+            document.getElementById("phone").value = donor.phone;
+            document.getElementById("email").value = donor.email;
+            document.getElementById("username").value = donor.username;
+            document.getElementById("password").value = donor.password;
+          } else {
+            alert("Donor not found");
+            window.location.href = "donorList.html"; // Redirect if not found
+          }
+        })
+        .catch(error => {
+          console.error("Failed to fetch donor data:", error);
+          alert("Failed to load donor data.");
+          window.location.href = "donorList.html";
+        });
+    } else {
+      alert("No donor ID provided in URL");
+      window.location.href = "donorList.html";
+    }
+
+    document.getElementById("updateDonorForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const donor = {
+        id: document.getElementById("donorId").value,
+        name: document.getElementById("name").value.trim(),
+        age: Number(document.getElementById("age").value),
+        bloodGroup: document.getElementById("bloodGroup").value.trim().toUpperCase(),
+        units: Number(document.getElementById("units").value),
+        phone: document.getElementById("phone").value.trim(),
+        email: document.getElementById("email").value.trim(),
+        username: document.getElementById("username").value.trim(),
+        password: document.getElementById("password").value,
+      };
+
+      fetch("http://localhost:9090/donors/update", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(donor),
+      })
+      .then(response => {
+        if (!response.ok) throw new Error("Failed to update donor");
+        alert("Donor updated successfully!");
+        window.location.href = "donarview.html"; // Redirect after update
+      })
+      .catch(error => alert(error.message));
+    });
+  </script>
+</body>
+</html>
