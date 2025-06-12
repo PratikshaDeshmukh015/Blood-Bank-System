@@ -10,27 +10,29 @@
     }
     body {
       font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(to right, #f5f7fa, #c3cfe2);
+      background: radial-gradient(circle at top left, #ffecec, #f0f4ff);
       padding: 40px 20px;
       margin: 0;
       display: flex;
-      justify-content: center;
+      flex-direction: column;
+      align-items: center;
     }
     .container {
       width: 100%;
-      max-width: 700px;
+      max-width: 750px;
       background: #fff;
-      border-radius: 10px;
-      box-shadow: 0 12px 25px rgba(0,0,0,0.1);
-      padding: 30px;
+      border-radius: 14px;
+      box-shadow: 0 16px 40px rgba(0,0,0,0.1);
+      padding: 35px;
       animation: fadeIn 0.8s ease;
+      position: relative;
     }
     h2 {
-      color: #b80000;
+     
       text-align: center;
-      font-size: 2.2rem;
+      font-size: 2.4rem;
       margin-bottom: 25px;
-      letter-spacing: 1px;
+      font-weight: 700;
     }
     table {
       width: 100%;
@@ -48,83 +50,87 @@
       color: #fff;
       font-weight: 700;
       border-radius: 8px 8px 0 0;
-      letter-spacing: 1.2px;
-      text-transform: uppercase;
+      letter-spacing: 1px;
     }
     tbody tr {
-      background: #fff0f0;
-      box-shadow: 0 6px 10px rgba(184, 0, 0, 0.1);
+      background: #fff4f4;
+      box-shadow: 0 6px 12px rgba(184, 0, 0, 0.1);
       border-radius: 10px;
       transition: transform 0.3s ease, box-shadow 0.3s ease;
-      cursor: default;
     }
     tbody tr:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 12px 25px rgba(184, 0, 0, 0.25);
+      transform: scale(1.02);
+      box-shadow: 0 16px 30px rgba(184, 0, 0, 0.2);
       background: #ffe5e5;
     }
-    /* Blood group badge */
     .badge {
       display: inline-block;
-      padding: 6px 14px;
-      border-radius: 30px;
+      padding: 7px 16px;
+      border-radius: 50px;
       font-weight: 600;
       color: white;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+      box-shadow: 0 3px 8px rgba(0,0,0,0.15);
     }
-    /* Color variants for blood groups */
-    .A { background-color: #d32f2f; }
-    .B { background-color: #1976d2; }
-    .AB { background-color: #fbc02d; color: #333; }
-    .O { background-color: #388e3c; }
+    .A { background-color: #e53935; }
+    .B { background-color: #1e88e5; }
+    .AB { background-color: #fdd835; color: #333; }
+    .O { background-color: #43a047; }
 
-    /* Progress bar container */
     .progress-container {
       width: 100%;
       height: 16px;
-      background: #ffd6d6;
+      background: #ffe1e1;
       border-radius: 12px;
       overflow: hidden;
-      box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
       margin-top: 6px;
+      box-shadow: inset 0 1px 3px rgba(0,0,0,0.08);
     }
-    /* Progress bar fill */
     .progress-bar {
       height: 100%;
-      background-color: #b80000;
+      background-image: linear-gradient(90deg, #b80000, #ff6961);
       transition: width 0.6s ease;
     }
-
-    /* Responsive */
     @media (max-width: 480px) {
       th, td {
         padding: 12px 10px;
         font-size: 0.9rem;
       }
       .container {
-        padding: 20px 15px;
+        padding: 25px 15px;
       }
       h2 {
-        font-size: 1.8rem;
+        font-size: 1.9rem;
       }
     }
-
     @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
     }
-
     .footer {
       margin-top: 25px;
       text-align: center;
       font-size: 14px;
       color: #555;
+    }
+    .btn-group {
+      margin-top: 20px;
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .btn {
+      padding: 10px 18px;
+      border-radius: 25px;
+      background: #b80000;
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      transition: background 0.3s ease;
+    }
+    .btn:hover {
+      background: #ff4d4d;
     }
   </style>
 </head>
@@ -142,57 +148,45 @@
     </table>
     <div class="footer">Updated live from Blood Bank Records</div>
   </div>
-
+  <div class="btn-group">
+    <!-- <a href="dashboard.html" class="btn">← Back to Dashboard</a> -->
+    <a href="donarRegister.html" class="btn">🩸 Donate Blood</a>
+    <a href="request.html" class="btn">📥 Request Blood</a>
+  </div>
   <script>
     const BLOOD_REQUESTS_URL = "http://localhost:9090/blood/available";
-
-    // Maximum units expected for scaling progress bar
     const MAX_UNITS = 50;
 
     function fetchBloodAvailability() {
       fetch(BLOOD_REQUESTS_URL)
         .then(response => {
-          if (!response.ok) {
-            throw new Error(`Error fetching blood data: ${response.statusText}`);
-          }
+          if (!response.ok) throw new Error(`HTTP error! ${response.statusText}`);
           return response.json();
         })
-        .then(data => {
-          displayBloodAvailability(data);
-        })
+        .then(data => displayBloodAvailability(data))
         .catch(error => {
-          console.error("Fetch error:", error);
-          document.getElementById("bloodTableBody").innerHTML =
-            `<tr><td colspan="2" style="color:red; text-align:center;">Failed to load blood availability data.</td></tr>`;
+          document.getElementById("bloodTableBody").innerHTML = `<tr><td colspan="2" style="color:red; text-align:center;">Unable to load data</td></tr>`;
         });
     }
 
     function displayBloodAvailability(data) {
       const tableBody = document.getElementById("bloodTableBody");
       tableBody.innerHTML = "";
-
       if (!data || data.length === 0) {
         tableBody.innerHTML = `<tr><td colspan="2" style="text-align:center;">No data available</td></tr>`;
         return;
       }
-
       data.forEach(item => {
         const units = item.units ?? item.availableUnits ?? 0;
         const groupRaw = item.bloodGroup ?? "Unknown";
-
-        // Clean blood group string to upper case (like A, B, AB, O)
         const group = groupRaw.toUpperCase();
-
-        // Get badge class by blood group prefix
         let badgeClass = "O";
         if (group.includes("A") && group.includes("B")) badgeClass = "AB";
         else if (group.includes("A")) badgeClass = "A";
         else if (group.includes("B")) badgeClass = "B";
 
-        // Calculate progress bar width (max 100%)
         let progressWidth = Math.min((units / MAX_UNITS) * 100, 100);
 
-        // Create row with badge and progress bar
         const row = document.createElement("tr");
         row.innerHTML = `
           <td><span class="badge ${badgeClass}">${group}</span></td>

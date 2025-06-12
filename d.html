@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Blood Bank System</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to bottom, #fff8f8, #ffe5e5);
+      scroll-behavior: smooth;
+    }
+    .navbar {
+      background: linear-gradient(to right, #8e0000, #c62828);
+      padding: 15px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      color: white;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+    .logo { font-size: 1.8rem; font-weight: 700; }
+    .menu-toggle { display: none; font-size: 26px; cursor: pointer; }
+    .menu {
+      list-style: none;
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .menu a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      padding: 10px 16px;
+      border-radius: 8px;
+      transition: 0.3s ease;
+    }
+    .menu a:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+      transform: scale(1.05);
+    }
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background: #f44336;
+      top: 100%;
+      left: 0;
+      min-width: 180px;
+      border-radius: 6px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+      z-index: 999;
+    }
+    .dropdown:hover .dropdown-content { display: block; }
+    .dropdown-content li a {
+      display: block;
+      padding: 10px 16px;
+      color: white;
+    }
+    .dropdown-content li a:hover { background-color: rgba(255,255,255,0.1); }
+
+    @media (max-width: 768px) {
+      .menu-toggle { display: block; color: white; }
+      .menu {
+        flex-direction: column;
+        width: 100%;
+        display: none;
+        background-color: #8e0000;
+        margin-top: 10px;
+      }
+      .menu.show { display: flex; }
+      .dropdown-content { position: static; box-shadow: none; background-color: #c62828; }
+    }
+
+    .slideshow {
+      position: relative;
+      height: 70vh;
+      background-position: center;
+      background-size: cover;
+      transition: background-image 1s ease-in-out;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: white;
+    }
+    .slideshow .overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom right, rgba(0,0,0,0.5), rgba(255,0,0,0.3));
+      z-index: 1;
+    }
+    .slideshow .text-content {
+      position: relative;
+      z-index: 2;
+      max-width: 800px;
+      padding: 20px;
+      animation: fadeIn 2s ease-in-out;
+    }
+    .slideshow h1 { font-size: 3rem; margin-bottom: 10px; }
+    .slideshow p { font-size: 1.2rem; }
+
+    .arrow-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 2rem;
+      color: white;
+      background: rgba(0, 0, 0, 0.3);
+      border: none;
+      padding: 10px;
+      cursor: pointer;
+      z-index: 3;
+      border-radius: 50%;
+    }
+    .arrow-btn:hover { background: rgba(0, 0, 0, 0.6); }
+    .arrow-left { left: 20px; }
+    .arrow-right { right: 20px; }
+
+    .content-section {
+      padding: 60px 20px;
+      max-width: 900px;
+      margin: auto;
+      animation: fadeIn 1.5s ease-in-out;
+    }
+    .content-section h2 {
+      margin-bottom: 20px;
+      color: #8e0000;
+      font-size: 2rem;
+      text-align: center;
+    }
+    .content-section p, .content-section ul {
+      font-size: 1.1rem;
+      color: #444;
+      line-height: 1.8;
+      text-align: center;
+    }
+
+    #scrollTopBtn {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background-color: #8e0000;
+      color: white;
+      border: none;
+      padding: 12px 16px;
+      border-radius: 50%;
+      font-size: 18px;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      display: none;
+      z-index: 100;
+    }
+    #scrollTopBtn:hover { background-color: #c62828; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <header class="navbar">
+    <div class="logo">🩸 Blood Bank</div>
+    <div class="menu-toggle" id="menu-toggle">&#9776;</div>
+    <ul class="menu" id="menu">
+      <li><a href="#">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li class="dropdown">
+        <a href="#">Donor ⮟</a>
+        <ul class="dropdown-content">
+          <li><a href="#">Dashboard</a></li>
+          <li><a href="#">Donate Blood</a></li>
+          <li><a href="#">Donation History</a></li>
+          <li><a href="#">Update Profile</a></li>
+        </ul>
+      </li>
+      <li class="dropdown">
+        <a href="#">Request ⮟</a>
+        <ul class="dropdown-content">
+          <li><a href="#">Dashboard</a></li>
+          <li><a href="#">Request Blood</a></li>
+          <li><a href="#">Request History</a></li>
+          <li><a href="#">Update Profile</a></li>
+        </ul>
+      </li>
+      <li class="dropdown">
+        <a href="#">Admin ⮟</a>
+        <ul class="dropdown-content">
+          <li><a href="#">Donors</a></li>
+          <li><a href="#">Requests</a></li>
+          <li><a href="#">Stock</a></li>
+          <li><a href="#">Reports</a></li>
+        </ul>
+      </li>
+    </ul>
+  </header>
+
+  <div class="slideshow" id="slideshow">
+    <div class="overlay"></div>
+    <div class="text-content" id="slide-text"></div>
+    <button class="arrow-btn arrow-left" onclick="changeSlide(-1)">❮</button>
+    <button class="arrow-btn arrow-right" onclick="changeSlide(1)">❯</button>
+  </div>
+
+  <section id="about" class="content-section">
+    <h2>About Us</h2>
+    <p>We connect donors with those in need, helping ensure no life is lost due to lack of blood. Join us and be a part of a lifesaving journey.</p>
+  </section>
+
+  <section id="contact" class="content-section">
+    <h2>Contact Us</h2>
+    <ul>
+      <li>Email: support@bloodbank.org</li>
+      <li>Phone: +91-9876543210</li>
+      <li>Address: 123 Life Line Avenue, City Hospital, India</li>
+    </ul>
+  </section>
+
+  <button id="scrollTopBtn" onclick="scrollToTop()">↑</button>
+
+  <script>
+    const menuToggle = document.getElementById("menu-toggle");
+    const menu = document.getElementById("menu");
+    menuToggle.addEventListener("click", () => {
+      menu.classList.toggle("show");
+    });
+
+    const scrollBtn = document.getElementById("scrollTopBtn");
+    window.onscroll = () => {
+      scrollBtn.style.display = window.scrollY > 300 ? "block" : "none";
+    };
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    const slides = [
+      {
+        img: 'images/img2.jpg',
+        title: 'Welcome to the Blood Bank System',
+        desc: 'Donate blood, save lives. Join our mission to ensure safe and timely blood supply for everyone in need.'
+      },
+      {
+        img: 'images/img2.jpg',
+        title: 'Your Blood Can Save a Life',
+        desc: 'Every drop counts. Help us maintain a steady supply of safe blood.'
+      },
+      {
+        img: 'images/img2.jpg',
+        title: 'Be a Hero Today',
+        desc: 'Sign up to donate blood and make a difference in someone\'s life.'
+      },
+      {
+        img: 'images/img2.jpg',
+        title: 'We Value Your Contribution',
+        desc: 'Together, let\'s build a healthier and stronger community.'
+      }
+    ];
+    let currentSlide = 0;
+    const slideshow = document.getElementById("slideshow");
+    const slideText = document.getElementById("slide-text");
+
+    function showSlide(index) {
+      const slide = slides[index];
+      slideshow.style.backgroundImage = `url('${slide.img}')`;
+      slideText.innerHTML = `<h1>${slide.title}</h1><p>${slide.desc}</p>`;
+    }
+
+    function changeSlide(direction) {
+      currentSlide = (currentSlide + direction + slides.length) % slides.length;
+      showSlide(currentSlide);
+    }
+
+    setInterval(() => changeSlide(1), 10000);
+    showSlide(currentSlide);
+  </script>
+</body>
+</html>

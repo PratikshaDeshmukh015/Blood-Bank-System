@@ -2,23 +2,20 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Blood Bank System</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-rUeZUSvEQm8N0LzLldCNfRKnNs3ZFL5A4MxIGK6GuGo5+5NIB1EYxH/3SFEYP6grwBHU5eGPkoN/hpbVnE38Yg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       font-family: 'Poppins', sans-serif;
       background-color: #fff8f8;
       scroll-behavior: smooth;
     }
-
-    /* Navbar */
     .navbar {
       background: linear-gradient(to right, #b71c1c, #d32f2f);
       padding: 15px 20px;
@@ -31,29 +28,14 @@
       top: 0;
       z-index: 100;
     }
-
-    .logo {
-      font-size: 1.8rem;
-      font-weight: 700;
-    }
-
-    .menu-toggle {
-      display: none;
-      font-size: 26px;
-      cursor: pointer;
-    }
-
+    .logo { font-size: 1.8rem; font-weight: 700; }
+    .menu-toggle { display: none; font-size: 26px; cursor: pointer; color: white; }
     .menu {
       list-style: none;
       display: flex;
       gap: 16px;
       flex-wrap: wrap;
     }
-
-    .menu li {
-      position: relative;
-    }
-
     .menu a {
       color: white;
       text-decoration: none;
@@ -62,45 +44,9 @@
       border-radius: 8px;
       transition: 0.3s ease;
     }
-
-    .menu a:hover {
-      background-color: rgba(255, 255, 255, 0.2);
-      transform: scale(1.05);
-    }
-
-    .dropdown-content {
-      display: none;
-      position: absolute;
-      background: #f44336;
-      top: 100%;
-      left: 0;
-      min-width: 180px;
-      border-radius: 6px;
-      box-shadow: 0 8px 16px rgba(0,0,0,0.15);
-      z-index: 999;
-    }
-
-    .dropdown:hover .dropdown-content {
-      display: block;
-    }
-
-    .dropdown-content li a {
-      display: block;
-      padding: 10px 16px;
-      color: white;
-      transition: 0.3s ease;
-    }
-
-    .dropdown-content li a:hover {
-      background-color: rgba(255, 255, 255, 0.1);
-    }
-
+    .menu a:hover { background-color: rgba(255, 255, 255, 0.2); transform: scale(1.05); }
     @media (max-width: 768px) {
-      .menu-toggle {
-        display: block;
-        color: white;
-      }
-
+      .menu-toggle { display: block; }
       .menu {
         flex-direction: column;
         width: 100%;
@@ -108,19 +54,48 @@
         background-color: #b71c1c;
         margin-top: 10px;
       }
-
-      .menu.show {
-        display: flex;
-      }
-
-      .dropdown-content {
-        position: static;
-        box-shadow: none;
-        background-color: #d32f2f;
-      }
+      .menu.show { display: flex; }
     }
 
-    /* Hero Section */
+    /* Dropdown Menu Styling */
+.dropdown {
+  position: relative;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: white;
+  color: #b71c1c;
+  min-width: 180px;
+  border-radius: 8px;
+  box-shadow: 0px 8px 16px rgba(0,0,0,0.1);
+  z-index: 1;
+  padding: 0;
+}
+
+.dropdown-content li {
+  list-style: none;
+}
+
+.dropdown-content li a {
+  color: #b71c1c;
+  padding: 10px 16px;
+  text-decoration: none;
+  display: block;
+  font-weight: 500;
+  border-radius: 0;
+}
+
+.dropdown-content li a:hover {
+  background-color: #ffe6e6;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+
     .hero-section {
       background: url('https://images.unsplash.com/photo-1588776814546-79d0c848db74?auto=format&fit=crop&w=1400&q=80') center/cover no-repeat;
       position: relative;
@@ -128,7 +103,6 @@
       padding: 100px 20px;
       text-align: center;
     }
-
     .hero-section::before {
       content: "";
       position: absolute;
@@ -136,32 +110,14 @@
       background: linear-gradient(to bottom, rgba(183,28,28,0.8), rgba(0,0,0,0.6));
       z-index: 1;
     }
-
     .hero-content {
       position: relative;
       z-index: 2;
       max-width: 800px;
       margin: auto;
     }
-
-    .hero-content h1 {
-      font-size: 3rem;
-      font-weight: 700;
-      margin-bottom: 20px;
-    }
-
-    .hero-content p {
-      font-size: 1.2rem;
-      margin-bottom: 30px;
-    }
-
-    .hero-buttons {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      flex-wrap: wrap;
-    }
-
+    .hero-content h1 { font-size: 3rem; font-weight: 700; margin-bottom: 20px; }
+    .hero-content p { font-size: 1.2rem; margin-bottom: 30px; }
     .hero-btn {
       background: white;
       color: #b71c1c;
@@ -170,142 +126,460 @@
       font-weight: 600;
       text-decoration: none;
       transition: 0.3s ease;
+      margin: 5px;
+      display: inline-block;
     }
+    .hero-btn:hover { background: #ffebee; transform: scale(1.05); }
 
-    .hero-btn:hover {
-      background: #ffebee;
-      transform: scale(1.05);
-    }
-
-    /* Content Sections */
-    .content-section {
+    .donation-steps {
+      background: linear-gradient(to bottom, #fff5f5, #ffeaea);
       padding: 60px 20px;
-      max-width: 900px;
+      text-align: center;
+    }
+    .steps-container {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      gap: 100px;
+      padding-bottom: 40px;
+    }
+    .step {
+      background: white;
+      padding: 30px;
+      border-radius: 20px;
+      width: 250px;
+      scroll-snap-align: center;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease;
+      flex-shrink: 0;
+    }
+    .step:hover { transform: translateY(-10px); }
+    .icon { font-size: 3rem; margin-bottom: 15px; }
+    .step h3 { color: #b71c1c; }
+    .progress-bar {
+      height: 4px;
+      background: linear-gradient(to right, #b71c1c, #ff4e4e);
+      width: 0;
+      transition: width 0.3s ease-out;
+    }
+
+    .about-section {
+      background: linear-gradient(to right, #fff8f8, #ffe6e6);
+      padding: 80px 20px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .about-container {
+      background: white;
+      max-width: 800px;
       margin: auto;
+      padding: 40px 30px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(183, 28, 28, 0.1);
+      position: relative;
+      z-index: 2;
+    }
+    .about-icon { font-size: 3rem; margin-bottom: 10px; animation: pulse 1.5s infinite; }
+    .about-container h2 { color: #b71c1c; font-size: 2.5rem; margin-bottom: 20px; }
+    .about-container p { font-size: 1.1rem; color: #444; line-height: 1.7; margin-bottom: 15px; }
+    .highlight { color: #d32f2f; font-weight: 600; }
+    .heart-bg {
+      position: absolute;
+      top: -40px;
+      left: -50px;
+      width: 150px;
+      height: 150px;
+      background: url('https://cdn-icons-png.flaticon.com/512/833/833472.png') no-repeat center/contain;
+      opacity: 0.05;
+      animation: float 6s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(20px); }
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); opacity: 0.9; }
+      50% { transform: scale(1.1); opacity: 1; }
+      100% { transform: scale(1); opacity: 0.9; }
     }
 
-    .content-section h2 {
-      margin-bottom: 20px;
-      color: #b71c1c;
-      font-size: 2rem;
+    .contact-section {
+      background: linear-gradient(to right, #fce4ec, #f8bbd0);
+      padding: 80px 20px;
+      text-align: center;
     }
-
-    .content-section p,
-    .content-section ul {
-      font-size: 1rem;
+    .contact-container {
+      max-width: 700px;
+      margin: auto;
+      background: white;
+      border-radius: 20px;
+      padding: 40px 30px;
+      box-shadow: 0 10px 30px rgba(220, 20, 60, 0.15);
+    }
+    .contact-container h2 { color: #c2185b; font-size: 2.5rem; margin-bottom: 30px; }
+    .contact-list { list-style: none; padding: 0; margin: 0; text-align: left; }
+    .contact-list li {
+      display: flex;
+      align-items: center;
+      font-size: 1.1rem;
       color: #333;
-      line-height: 1.7;
+      margin-bottom: 20px;
+      transition: transform 0.3s ease, color 0.3s ease;
     }
-
-    .content-section ul {
-      padding-left: 20px;
+    .contact-list li i {
+      font-size: 1.5rem;
+      margin-right: 15px;
+      color: #d81b60;
+      min-width: 30px;
     }
-
-    /* Scroll to Top Button */
-    #scrollTopBtn {
-      position: fixed;
-      bottom: 30px;
-      right: 30px;
-      background-color: #b71c1c;
-      color: white;
-      border: none;
-      padding: 12px 16px;
-      border-radius: 50%;
-      font-size: 18px;
-      cursor: pointer;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-      display: none;
-      z-index: 100;
-      transition: background-color 0.3s;
-    }
-
-    #scrollTopBtn:hover {
-      background-color: #d32f2f;
-    }
+    .contact-list li:hover { color: #c2185b; transform: translateX(5px); }
   </style>
 </head>
 <body>
   <header class="navbar">
     <div class="logo">🩸 Blood Bank</div>
-    <div class="menu-toggle" id="menu-toggle">&#9776;</div>
+    <div class="menu-toggle" id="menu-toggle">☰</div>
     <ul class="menu" id="menu">
-      <li><a href="home.html">Home</a></li>
-      <li><a href="#about">About</a></li>
-      <li><a href="#contact">Contact</a></li>
+  <li><a href="home.html">Home</a></li>
+  <li><a href="#about">About</a></li>
+  <li><a href="#contact">Contact</a></li>
 
-      <li class="dropdown">
-        <a href="#">Donor ⮟</a>
-        <ul class="dropdown-content">
-          <li><a href="donarDashboard.html">Dashboard</a></li>
-          <li><a href="againdonate.html">Donate Blood</a></li>
-          <li><a href="#">Donation History</a></li>
-          <li><a href="#">Update Profile</a></li>
-        </ul>
-      </li>
-
-       <li class="dropdown">
-        <a href="#">Request ⮟</a>
-        <ul class="dropdown-content">
-          <li><a href="avalibleblood.html">Dashboard</a></li>
-          <li><a href="bloodRe.html">Donate Blood</a></li>
-          <li><a href="#">Donation History</a></li>
-          <li><a href="#">Update Profile</a></li>
-        </ul>
-      </li>
-
-      <li class="dropdown">
-        <a href="#">Admin ⮟</a>
-        <ul class="dropdown-content">
-          <li><a href="login.html">Donors</a></li>
-          <li><a href="login1.html">Requests</a></li>
-          <li><a href="#">Manage Stock</a></li>
-          <li><a href="#">Reports</a></li>
-        </ul>
-      </li>
+  <li class="dropdown">
+    <a href="#">Donor ⮟</a>
+    <ul class="dropdown-content">
+      <li><a href="donarDashboard.html">Dashboard</a></li>
+      <li><a href="againdonate.html">Donate Blood</a></li>
+      <!-- <li><a href="#">Donation History</a></li>
+      <li><a href="#">Update Profile</a></li> -->
     </ul>
+  </li>
+
+  <li class="dropdown">
+    <a href="#">Request ⮟</a>
+    <ul class="dropdown-content">
+      <li><a href="avalibleblood.html">Dashboard</a></li>
+      <li><a href="bloodRe.html">Donate Blood</a></li>
+      <!-- <li><a href="#">Donation History</a></li>
+      <li><a href="#">Update Profile</a></li> -->
+    </ul>
+  </li>
+
+  <li class="dropdown">
+    <a href="#">Admin ⮟</a>
+    <ul class="dropdown-content">
+      <li><a href="login.html">Donors</a></li>
+      <li><a href="login1.html">Requests</a></li>
+      <!-- <li><a href="#">Manage Stock</a></li>
+      <li><a href="#">Reports</a></li> -->
+    </ul>
+  </li>
+</ul>
+
   </header>
 
   <section class="hero-section">
     <div class="hero-content">
       <h1>Donate Blood, Save Lives 🩸</h1>
       <p>Every drop counts. Be the reason someone lives today. Join our community of lifesavers.</p>
-      <div class="hero-buttons">
-        <a href="donarRegister.html" class="hero-btn">Become a Donor</a>
-        <a href="request.html" class="hero-btn">Request Blood</a>
-      </div>
+      <a href="donarRegister.html" class="hero-btn">Become a Donor</a>
+      <a href="request.html" class="hero-btn">Request Blood</a>
     </div>
   </section>
 
-  <section id="about" class="content-section">
-    <h2>About Us</h2>
-    <p>Welcome to the Blood Bank System — a platform that bridges the gap between life and hope. Our mission is to make blood donation easy, safe, and accessible for everyone. By connecting donors, recipients, and hospitals, we ensure that every drop counts.</p>
+  <section class="donation-steps">
+<h1 class="typing-title"><span class="highlight-text">🩸 How Blood Donation Works:</span> <span id="typed"></span></h1>
+
+    <div class="steps-container" id="scrollContainer">
+      <div class="step"><div class="icon">📝</div><h3>Register</h3><p>Fill out a simple form with your basic information.</p></div>
+      <div class="step"><div class="icon">🧪</div><h3>Health Check</h3><p>We check your blood pressure, hemoglobin, and more to ensure you're eligible.</p></div>
+      <div class="step"><div class="icon">🩸</div><h3>Donate</h3><p>Relax while we collect your blood—just 8–10 minutes!</p></div>
+      <div class="step"><div class="icon">🍎</div><h3>Refresh</h3><p>Enjoy snacks and drinks after donating to recover quickly.</p></div>
+      <div class="step"><div class="icon">🎉</div><h3>You're a Hero!</h3><p>Thank you for saving lives. Share your experience!</p></div>
+    </div>
+    <div class="progress-bar" id="progressBar"></div>
   </section>
 
-  <section id="contact" class="content-section">
-    <h2>Contact Us</h2>
-    <p>Need help or want to get involved? Reach out to us!</p>
-    <ul>
-      <li>Email: support@bloodbank.org</li>
-      <li>Phone: +91-9876543210</li>
-      <li>Address: 123 Life Line Avenue, City Hospital, India</li>
-    </ul>
-  </section>
 
-  <button id="scrollTopBtn" onclick="scrollToTop()">↑</button>
+  
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 20px;
+      background: #f8f9fa;
+    }
+
+    h1.styled-heading {
+  font-size: 2.5rem;
+  text-align: center;
+  font-weight: 700;
+  position: relative;
+  margin: 0 auto 20px;
+  animation: fadeInDrop 0.6s ease-out;
+}
+
+h1.styled-heading::after {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 4px;
+  margin: 8px auto 0;
+  background: linear-gradient(90deg, #a10000, #ff4c4c);
+  border-radius: 2px;
+}
+
+@keyframes fadeInDrop {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+    .intro {
+      text-align: center;
+      font-size: 1.1rem;
+      margin-bottom: 30px;
+      color: #333;
+    }
+
+    .intro span {
+      color: #a10000;
+      font-weight: bold;
+    }
+
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      max-width: 1000px;
+      margin: 0 auto;
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+      overflow: hidden;
+    }
+
+    .sidebar {
+      width: 100%;
+      max-width: 220px;
+      background: #f1f1f1;
+      display: flex;
+      flex-direction: column;
+      border-right: 1px solid #ddd;
+    }
+
+    .tab {
+      padding: 15px 20px;
+      cursor: pointer;
+      transition: all 0.3s;
+      border-left: 4px solid transparent;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .tab:hover {
+      background: #fcecec;
+    }
+
+    .tab.active {
+      background-color: #ffe5e5;
+      border-left: 4px solid #d32f2f;
+      font-weight: bold;
+    }
+
+    .content {
+      flex: 1;
+      padding: 30px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      align-items: flex-start;
+    }
+
+    .text {
+      flex: 1 1 60%;
+      color: #444;
+      animation: fadeIn 0.3s ease-in-out;
+    }
+
+    .text h3 {
+      margin-top: 20px;
+      font-size: 1.1rem;
+      color: #a10000;
+    }
+
+    .image {
+      flex: 1 1 30%;
+      text-align: center;
+    }
+
+    .image img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(10px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+      }
+
+      .sidebar {
+        flex-direction: row;
+        justify-content: space-around;
+        max-width: 100%;
+        border-right: none;
+        border-bottom: 1px solid #ccc;
+      }
+
+      .tab {
+        flex: 1;
+        justify-content: center;
+      }
+
+      .content {
+        flex-direction: column;
+      }
+
+      .image {
+        margin-top: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<h1 class="styled-heading">Types of Donation</h1>  <p class="intro">
+    The average human body contains about five litres of blood, which is made of several cellular and non-cellular components such as
+    <span>Red blood cell, Platelet, and Plasma</span>.
+  </p>
+
+  <div class="container">
+    <div class="sidebar">
+      <div class="tab active" onclick="showContent('prbc')"><i class="fas fa-tint"></i> Packed RBC</div>
+      <div class="tab" onclick="showContent('plasma')"><i class="fas fa-water"></i> Plasma</div>
+      <div class="tab" onclick="showContent('platelets')"><i class="fas fa-pills"></i> Platelets</div>
+    </div>
+
+    <div class="content">
+      <div class="text" id="contentText">
+        <p>Blood collected straight from the donor into a blood bag and mixed with an anticoagulant is called as whole blood. This collected whole blood is then centrifuged and red cell, platelets and plasma are separated. The separated red cells are mixed with a preservative to be called as packed red blood cells.</p>
+        <h3>Who can donate?</h3>
+        <p>You need to be 18-65 years old, weigh 45kg or more and be fit and healthy.</p>
+        <h3>User For?</h3>
+        <p>Correction of severe anemia in a number of conditions and blood loss in case of child birth, surgery or trauma settings.</p>
+      </div>
+      <div class="image" id="contentImage">
+        <img src="images/doctor.jpg" alt="Donation Type Image" />
+      </div>
+    </div>
+  </div>
 
   <script>
-    document.getElementById("menu-toggle").addEventListener("click", () => {
-      document.getElementById("menu").classList.toggle("show");
-    });
-
-    // Scroll to Top
-    const scrollBtn = document.getElementById("scrollTopBtn");
-    window.onscroll = () => {
-      scrollBtn.style.display = window.scrollY > 300 ? "block" : "none";
+    const tabContents = {
+      prbc: {
+        html: `
+          <p>Blood collected straight from the donor into a blood bag and mixed with an anticoagulant is called as whole blood. This collected whole blood is then centrifuged and red cell, platelets and plasma are separated. The separated red cells are mixed with a preservative to be called as packed red blood cells.</p>
+          <h3>Who can donate?</h3>
+          <p>You need to be 18-65 years old, weigh 45kg or more and be fit and healthy.</p>
+          <h3>User For?</h3>
+          <p>Correction of severe anemia in a number of conditions and blood loss in case of child birth, surgery or trauma settings.</p>
+        `,
+        img: "images/RCB.jpg"
+      },
+      plasma: {
+        html: `
+          <p>Plasma is the liquid portion of blood that remains after red blood cells, white blood cells, and platelets are removed. It's rich in proteins and used in treatments for clotting disorders and immune system conditions.</p>
+          <h3>Who can donate?</h3>
+          <p>Donors must be 18-65 years old, weigh at least 50kg, and meet health criteria.</p>
+          <h3>User For?</h3>
+          <p>Used to treat burn victims, shock patients, and those with bleeding disorders.</p>
+        `,
+        img: "images/Plasma.png"
+      },
+      platelets: {
+        html: `
+          <p>Platelets are blood components that help with clotting. Donating platelets is critical for patients undergoing chemotherapy, organ transplants, or major surgeries.</p>
+          <h3>Who can donate?</h3>
+          <p>Healthy adults aged 18–60 with a sufficient platelet count can donate.</p>
+          <h3>User For?</h3>
+          <p>Helps cancer patients, people with bleeding disorders, and transplant recipients.</p>
+        `,
+        img: "images/Platelets.jpg"
+      }
     };
-    function scrollToTop() {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    function showContent(type) {
+      // Set new content
+      document.getElementById("contentText").innerHTML = tabContents[type].html;
+      document.getElementById("contentImage").innerHTML = `<img src="${tabContents[type].img}" alt="Donation Type Image" />`;
+
+      // Highlight the selected tab
+      document.querySelectorAll(".tab").forEach(tab => tab.classList.remove("active"));
+      const index = type === "prbc" ? 0 : type === "plasma" ? 1 : 2;
+      document.querySelectorAll(".tab")[index].classList.add("active");
     }
+  </script>
+
+</body>
+</html>
+
+
+
+  <section id="about" class="about-section">
+    <div class="about-container" data-aos="fade-up">
+      <div class="about-icon">❤️</div>
+      <h2>About Us</h2>
+      <p>
+        Welcome to <strong>Blood Bank System</strong> — where we bridge the gap between
+        <span class="highlight">life</span> and <span class="highlight">hope</span>. Our mission is to make blood donation
+        <strong>easy</strong>, <strong>safe</strong>, and <strong>accessible</strong> for everyone.
+      </p>
+      <p>
+        By connecting donors, recipients, and hospitals, we ensure that <em>every drop counts</em>. Join us in building a healthier tomorrow.
+      </p>
+    </div>
+    <div class="heart-bg"></div>
+  </section>
+
+  <section id="contact" class="contact-section">
+    <div class="contact-container" data-aos="fade-up">
+      <h2>Contact Us</h2>
+      <ul class="contact-list">
+        <li><i class="fas fa-envelope"></i>Email: support@bloodbank.org</li>
+        <li><i class="fas fa-phone"></i>Phone: +91-9876543210</li>
+        <li><i class="fas fa-map-marker-alt"></i>Address: 123 Life Line Avenue, City Hospital, India</li>
+      </ul>
+    </div>
+  </section>
+
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+  <script>
+    AOS.init();
+
+    const toggle = document.getElementById("menu-toggle");
+    const menu = document.getElementById("menu");
+    toggle.addEventListener("click", () => menu.classList.toggle("show"));
+
+    const scrollContainer = document.getElementById("scrollContainer");
+    const progressBar = document.getElementById("progressBar");
+    scrollContainer.addEventListener("scroll", () => {
+      const maxScrollLeft = scrollContainer.scrollWidth - scrollContainer.clientWidth;
+      const percent = (scrollContainer.scrollLeft / maxScrollLeft) * 100;
+      progressBar.style.width = percent + '%';
+    });
   </script>
 </body>
 </html>

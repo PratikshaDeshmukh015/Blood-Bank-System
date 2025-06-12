@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Types of Donation</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-rUeZUSvEQm8N0LzLldCNfRKnNs3ZFL5A4MxIGK6GuGo5+5NIB1EYxH/3SFEYP6grwBHU5eGPkoN/hpbVnE38Yg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 20px;
+      background: #f8f9fa;
+    }
+
+    h1 {
+      color: #a10000;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .intro {
+      text-align: center;
+      font-size: 1.1rem;
+      margin-bottom: 30px;
+      color: #333;
+    }
+
+    .intro span {
+      color: #a10000;
+      font-weight: bold;
+    }
+
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      max-width: 1000px;
+      margin: 0 auto;
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+      overflow: hidden;
+    }
+
+    .sidebar {
+      width: 100%;
+      max-width: 220px;
+      background: #f1f1f1;
+      display: flex;
+      flex-direction: column;
+      border-right: 1px solid #ddd;
+    }
+
+    .tab {
+      padding: 15px 20px;
+      cursor: pointer;
+      transition: all 0.3s;
+      border-left: 4px solid transparent;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .tab:hover {
+      background: #fcecec;
+    }
+
+    .tab.active {
+      background-color: #ffe5e5;
+      border-left: 4px solid #d32f2f;
+      font-weight: bold;
+    }
+
+    .content {
+      flex: 1;
+      padding: 30px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      align-items: flex-start;
+    }
+
+    .text {
+      flex: 1 1 60%;
+      color: #444;
+      animation: fadeIn 0.3s ease-in-out;
+    }
+
+    .text h3 {
+      margin-top: 20px;
+      font-size: 1.1rem;
+      color: #a10000;
+    }
+
+    .image {
+      flex: 1 1 30%;
+      text-align: center;
+    }
+
+    .image img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(10px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+      }
+
+      .sidebar {
+        flex-direction: row;
+        justify-content: space-around;
+        max-width: 100%;
+        border-right: none;
+        border-bottom: 1px solid #ccc;
+      }
+
+      .tab {
+        flex: 1;
+        justify-content: center;
+      }
+
+      .content {
+        flex-direction: column;
+      }
+
+      .image {
+        margin-top: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Types of Donation</h1>
+  <p class="intro">
+    The average human body contains about five litres of blood, which is made of several cellular and non-cellular components such as
+    <span>Red blood cell, Platelet, and Plasma</span>.
+  </p>
+
+  <div class="container">
+    <div class="sidebar">
+      <div class="tab active" onclick="showContent('prbc')"><i class="fas fa-tint"></i> Packed RBC</div>
+      <div class="tab" onclick="showContent('plasma')"><i class="fas fa-water"></i> Plasma</div>
+      <div class="tab" onclick="showContent('platelets')"><i class="fas fa-pills"></i> Platelets</div>
+    </div>
+
+    <div class="content">
+      <div class="text" id="contentText">
+        <p>Blood collected straight from the donor into a blood bag and mixed with an anticoagulant is called as whole blood. This collected whole blood is then centrifuged and red cell, platelets and plasma are separated. The separated red cells are mixed with a preservative to be called as packed red blood cells.</p>
+        <h3>Who can donate?</h3>
+        <p>You need to be 18-65 years old, weigh 45kg or more and be fit and healthy.</p>
+        <h3>User For?</h3>
+        <p>Correction of severe anemia in a number of conditions and blood loss in case of child birth, surgery or trauma settings.</p>
+      </div>
+      <div class="image" id="contentImage">
+        <img src="images/doctor.jpg" alt="Donation Type Image" />
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const tabContents = {
+      prbc: {
+        html: `
+          <p>Blood collected straight from the donor into a blood bag and mixed with an anticoagulant is called as whole blood. This collected whole blood is then centrifuged and red cell, platelets and plasma are separated. The separated red cells are mixed with a preservative to be called as packed red blood cells.</p>
+          <h3>Who can donate?</h3>
+          <p>You need to be 18-65 years old, weigh 45kg or more and be fit and healthy.</p>
+          <h3>User For?</h3>
+          <p>Correction of severe anemia in a number of conditions and blood loss in case of child birth, surgery or trauma settings.</p>
+        `,
+        img: "images/doctor.jpg"
+      },
+      plasma: {
+        html: `
+          <p>Plasma is the liquid portion of blood that remains after red blood cells, white blood cells, and platelets are removed. It's rich in proteins and used in treatments for clotting disorders and immune system conditions.</p>
+          <h3>Who can donate?</h3>
+          <p>Donors must be 18-65 years old, weigh at least 50kg, and meet health criteria.</p>
+          <h3>User For?</h3>
+          <p>Used to treat burn victims, shock patients, and those with bleeding disorders.</p>
+        `,
+        img: "images/plasma.jpg"
+      },
+      platelets: {
+        html: `
+          <p>Platelets are blood components that help with clotting. Donating platelets is critical for patients undergoing chemotherapy, organ transplants, or major surgeries.</p>
+          <h3>Who can donate?</h3>
+          <p>Healthy adults aged 18–60 with a sufficient platelet count can donate.</p>
+          <h3>User For?</h3>
+          <p>Helps cancer patients, people with bleeding disorders, and transplant recipients.</p>
+        `,
+        img: "images/platelets.jpg"
+      }
+    };
+
+    function showContent(type) {
+      // Set new content
+      document.getElementById("contentText").innerHTML = tabContents[type].html;
+      document.getElementById("contentImage").innerHTML = `<img src="${tabContents[type].img}" alt="Donation Type Image" />`;
+
+      // Highlight the selected tab
+      document.querySelectorAll(".tab").forEach(tab => tab.classList.remove("active"));
+      const index = type === "prbc" ? 0 : type === "plasma" ? 1 : 2;
+      document.querySelectorAll(".tab")[index].classList.add("active");
+    }
+  </script>
+
+</body>
+</html>
